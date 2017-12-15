@@ -2,6 +2,8 @@ import os
 import sys
 import re
 import pandas as pd
+
+
 class ProjectReader:
 
     def __init__(self, root, language):
@@ -35,6 +37,9 @@ class ProjectReader:
         elif "ruby" in self.language:
             self.filterRubyProject(structure, structureList)
 
+        elif "cpp" in self.language:
+            self.filtarCppProject(structure, structureList)
+
 
 
     def filterPythonProject(self, structure, structureList=[]):
@@ -43,13 +48,7 @@ class ProjectReader:
         pythonInitPattern = re.compile(".*__init__.py$")
         pythonCachePattern = re.compile(".*__pycache__.*")
 
-        if pythonInitPattern.match(structure):
-            return
-        
-        elif pythonCachePattern.match(structure):
-            return
-        
-        elif pythonPattern.match(structure):
+        if pythonPattern.match(structure) and not pythonCachePattern.match(structure) and not pythonInitPattern.match(structure):
             structureList.append(structure)
 
 
@@ -58,10 +57,7 @@ class ProjectReader:
         javaPattern = re.compile(".+\.java$")
         javadocPattern = re.compile(".*package-info.java$")
 
-        if javadocPattern.match(structure):
-            return
-
-        elif javaPattern.match(structure):
+        if javaPattern.match(structure) and not javadocPattern.match(structure):
             structureList.append(structure)
 
     
@@ -78,5 +74,12 @@ class ProjectReader:
         rubyPattern = re.compile(".*\.rb$")
 
         if rubyPattern.match(structure):
-            structureList.append(structure)        
+            structureList.append(structure)
 
+
+    def filtarCppProject(self, structure, structureList=[]):
+
+        cppPattern = re.compile(".*\.(cc|cpp|h)$")
+
+        if cppPattern.match(structure):
+            structureList.append(structure)
