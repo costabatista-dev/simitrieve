@@ -32,6 +32,9 @@ class ProjectReader:
         elif "java" in self.language:
             self.filterJavaProject(structure, structureList)
 
+        elif "ruby" in self.language:
+            self.filterRubyProject(structure, structureList)
+
 
 
     def filterPythonProject(self, structure, structureList=[]):
@@ -61,10 +64,19 @@ class ProjectReader:
         elif javaPattern.match(structure):
             structureList.append(structure)
 
+    
     def filterJavascriptProject(self, structure, structureList=[]):
 
         javascriptPattern = re.compile(".+\.js$")
 
         if javascriptPattern.match(structure):
-            print("aqui")
             structureList.append(structure)
+
+
+    def filterRubyProject(self, structure, structureList=[]):
+
+        rubyPattern = re.compile(".*\.rb$")
+
+        if rubyPattern.match(structure):
+            structureList.append(structure)        
+
