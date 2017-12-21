@@ -6,6 +6,14 @@ public class Package {
 	private String name;
 	private List<Class> classes;
 	
+	public Package() {
+		
+	}
+	
+	public Package(String name, List<Class> classes) {
+		setName(name);
+		setClasses(classes);
+	}
 	
 	public String getName() {
 		return name;

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ml.paulobatista.simitrieve.entity.Class;
+import ml.paulobatista.simitrieve.entity.Package;
 import ml.paulobatista.simitrieve.scan.Pattern;
 import ml.paulobatista.simitrieve.scan.Scanner;
 
@@ -17,6 +18,11 @@ import ml.paulobatista.simitrieve.scan.Scanner;
  */
 public class ProjectFactory {
 	
+	public List<Package> getPackageList(List<Class> classes) {
+		
+		// not supported yet
+		return null;
+	}
 	
 	public List<Class> getClassList(List<File> files) {
 		List<Class> classes = new ArrayList<Class>();
@@ -26,6 +32,19 @@ public class ProjectFactory {
 		}
 		
 		return classes;
+	}
+	
+	
+	private Package getPackageInstance(Class classFile) {
+		//not supported yet
+		return null;
+	}
+	
+	private String getPackageName(Class classFile) {
+		String absoluteName = classFile.getName();
+		// not supported yet
+		// i' stop here
+		return null;
 	}
 	
 	private Class getClassInstance(File file) {
