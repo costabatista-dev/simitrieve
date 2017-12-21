@@ -79,7 +79,7 @@ public class Scanner {
 		if (!programmingLanguage.equals(ProgrammingLanguage.CPP)) {
 			for(File iteratorFile : files) {
 				fileName = iteratorFile.getName();
-				if (fileName.endsWith(pattern[0])) {
+				if (fileName.endsWith(pattern[0]) && !isUndesirableFile(iteratorFile, programmingLanguage)) {
 					projectFiles.add(iteratorFile);
 				}
 			}
@@ -104,5 +104,16 @@ public class Scanner {
 		return projectFiles;
 	}
 	
+	private boolean isUndesirableFile(File file, ProgrammingLanguage programmingLanguage) {
+		String fileName = file.getName();
+		boolean isUndesirable = false;
+		if(programmingLanguage.equals(ProgrammingLanguage.JAVA) && fileName.equals("package-info.java")) {
+			isUndesirable = true;
+		}
+		else if(programmingLanguage.equals(ProgrammingLanguage.PYTHON) && fileName.equals("__init__.py")) {
+			isUndesirable = true;
+		}
+		return isUndesirable;
+	}
 	
 }
