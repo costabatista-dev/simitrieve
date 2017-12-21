@@ -11,8 +11,18 @@ import java.util.List;
  */
 public class Class {
 	private String name;
+	private String path;
 	private List<String> sourceCode;
 
+	public Class() {
+		
+	}
+	
+	public Class(String path, List<String> sourceCode) {
+		setPath(path);
+		setSourceCode(sourceCode);
+	}
+	
 	public List<String> getSourceCode() {
 		return sourceCode;
 	}
@@ -29,4 +39,11 @@ public class Class {
 		this.name = name;
 	}
 	
+	public String getPath() {
+		return path;
+	}
+	
+	public void setPath(String path) {
+		this.path = path;
+	}
 }
