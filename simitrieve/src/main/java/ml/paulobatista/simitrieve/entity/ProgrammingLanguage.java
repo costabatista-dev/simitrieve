@@ -8,6 +8,16 @@ package ml.paulobatista.simitrieve.entity;
  *
  */
 public enum ProgrammingLanguage {
-	PYTHON, JAVASCRIPT,
-	JAVA, RUBY, CPP
+	PYTHON("Python"), JAVASCRIPT("Javascript"),
+	JAVA("Java"), RUBY("Ruby"), CPP("Cpp");
+	
+	private String programmingLanguage;
+	
+	ProgrammingLanguage(String programmingLanguage) {
+		this.programmingLanguage = programmingLanguage;
+	}
+	
+	public String getProgrammingLanguage() {
+		return this.programmingLanguage;
+	}
 }

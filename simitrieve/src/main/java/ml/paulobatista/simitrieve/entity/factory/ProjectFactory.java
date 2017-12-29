@@ -30,7 +30,7 @@ public class ProjectFactory {
 		List<Class> classes = getClassList(files);
 		
 		String projectName = getProjectName(root);
-		System.out.println(projectName);
+
 		List<Package> packages = getPackageList(classes, projectName);
 		
 		Project project = new Project();
@@ -134,7 +134,6 @@ public class ProjectFactory {
 			name = name.substring(0, name.length() - 1);
 		}
 		
-		System.out.println(name);
 		return name;
 	}
 
