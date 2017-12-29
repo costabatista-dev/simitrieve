@@ -37,4 +37,9 @@ public class ErrorHandler {
 		System.out.println("Unexpected Error: A file with a unknown extension is inside the file list");
 		System.exit(Error.UNKNOWN_FILE_EXTENSION_ERROR.getCode());
 	}
+	
+	public static void projectNameIsWrong() {
+		System.out.println("Unexpected Error: The project name is wrong");
+		System.exit(Error.PROJECT_NAME_IS_WRONG_ERROR.getCode());
+	}
 }

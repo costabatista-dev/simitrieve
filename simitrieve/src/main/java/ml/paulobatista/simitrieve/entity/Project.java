@@ -24,11 +24,11 @@ public class Project {
 		this.programmingLanguage = programmingLanguage;
 	}
 	
-	public List<Package> getPackage() {
+	public List<Package> getPackages() {
 		return packages;
 	}
 	
-	public void setPackage(List<Package> packages) {
+	public void setPackages(List<Package> packages) {
 		this.packages = packages;
 	}
 }

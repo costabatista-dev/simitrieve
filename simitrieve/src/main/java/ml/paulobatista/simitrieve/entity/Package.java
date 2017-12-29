@@ -30,4 +30,8 @@ public class Package {
 	public void setClasses(List<Class> classes) {
 		this.classes = classes;
 	}
+	
+	public void addClass(Class c) {
+		this.classes.add(c);
+	}
 }
