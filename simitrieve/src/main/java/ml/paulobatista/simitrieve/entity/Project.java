@@ -3,7 +3,8 @@ package ml.paulobatista.simitrieve.entity;
 import java.util.List;
 
 public class Project {
-	private String name;
+	private String name; 
+	private String version;
 	private ProgrammingLanguage programmingLanguage;
 	private List<Package> packages;
 	
@@ -30,5 +31,13 @@ public class Project {
 	
 	public void setPackages(List<Package> packages) {
 		this.packages = packages;
+	}
+	
+	public void setVersion(String version) {
+		this.version = version;
+	}
+	
+	public String getVersion() {
+		return this.version;
 	}
 }
