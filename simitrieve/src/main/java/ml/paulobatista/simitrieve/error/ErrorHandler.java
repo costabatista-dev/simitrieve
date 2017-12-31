@@ -42,4 +42,15 @@ public class ErrorHandler {
 		System.out.println("Unexpected Error: The project name is wrong");
 		System.exit(Error.PROJECT_NAME_IS_WRONG_ERROR.getCode());
 	}
+	
+	public static void directoryCannotBeCreated(String directory) {
+		System.out.println("Unexpected Error: The directory" + directory + 
+				 "cannot be created");
+		System.exit(Error.CANNOT_CREATE_DIRECTORY_ERROR.getCode());
+	}
+	
+	public static void projectVersionIsNULL() {
+		System.out.println("UNexpected Error: project version is NULL");
+		System.exit(Error.PROJECT_VERSION_IS_NULL.getCode());
+	}
 }
