@@ -10,6 +10,7 @@ import ml.paulobatista.simitrieve.entity.Class;
 import ml.paulobatista.simitrieve.entity.Package;
 import ml.paulobatista.simitrieve.entity.ProgrammingLanguage;
 import ml.paulobatista.simitrieve.entity.Project;
+import ml.paulobatista.simitrieve.error.ErrorHandler;
 
 /**
  * @author costa
@@ -21,6 +22,15 @@ public class FeatureScanner {
 		String projectName = project.getName();
 		
 		return projectName;
+	}
+	
+	public String getProjectVersion(Project project) {
+		String version = project.getVersion();
+		if(version == null || version.equals("")) {
+			System.out.println("In Feature Scanner:");
+			ErrorHandler.projectVersionIsNULL();
+		}
+		return version;
 	}
 	
 	public String getProgrammingLanguageName(Project project) {
