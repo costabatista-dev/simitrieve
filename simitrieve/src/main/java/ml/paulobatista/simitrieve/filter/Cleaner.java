@@ -8,7 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 public class Cleaner {
 	
 	public List<String> removeBlanckLine(List<String> sourceCode) {
-		List<String> filtered = new ArrayList<String>();
+		List<String> filtered = new ArrayList<>();
 		
 		for(String line : sourceCode) {
 			if(!line.trim().isEmpty() || line.matches("\\s+")) {
@@ -18,7 +18,7 @@ public class Cleaner {
 		return filtered;
 	}
 	public List<String> removeNonWordCharacters(List<String> sourceCode) {
-		List<String> sourceCodeWithoutNonWordCharacters = new ArrayList<String>();
+		List<String> sourceCodeWithoutNonWordCharacters = new ArrayList<>();
 		
 		for(String line : sourceCode) {
 			sourceCodeWithoutNonWordCharacters.addAll(removeNonWordCharacters(line));
@@ -28,7 +28,7 @@ public class Cleaner {
 	}
 	
 	public List<String> removeNonWordCharacters(String text) {
-		List<String> withoutNonWOrdCharacter = new ArrayList<String>();
+		List<String> withoutNonWOrdCharacter = new ArrayList<>();
 		
 		String[] splittedText = text.split("[\\W]");
 		
@@ -40,7 +40,7 @@ public class Cleaner {
 	}
 	
 	public List<String> removeDigits(List<String> sourceCode) {
-		List<String> filtered = new ArrayList<String>();
+		List<String> filtered = new ArrayList<>();
 		
 		for(String line : sourceCode) {
 			if(!StringUtils.isNumeric(line)) {

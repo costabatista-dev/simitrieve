@@ -42,7 +42,7 @@ public class FeatureScanner {
 	}
 	
 	public List<String> getPackageNameList(Project project) {
-		List<String> packageNameList = new ArrayList<String>();
+		List<String> packageNameList = new ArrayList<>();
 		
 		for(Package packageIterator : project.getPackages()) {
 			packageNameList.add(packageIterator.getName());
@@ -52,7 +52,7 @@ public class FeatureScanner {
 	}
 	
 	public List<String> getClassNameList(Project project) {
-		List<String> classNameList = new ArrayList<String>();
+		List<String> classNameList = new ArrayList<>();
 		
 		for(Package packageIterator : project.getPackages()) {
 			classNameList.addAll(getClassNameList(packageIterator));
@@ -84,7 +84,7 @@ public class FeatureScanner {
 	}
 	
 	public List<String> getClassNameList(Package packageFile) {
-		List<String> classNameList = new ArrayList<String>();
+		List<String> classNameList = new ArrayList<>();
 		
 		for(Class classIterator : packageFile.getClasses()) {
 			classNameList.add(classIterator.getName());

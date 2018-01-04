@@ -21,7 +21,7 @@ public class Scanner {
 
 	public List<File> getFiles(String root) {
 		File rootFile;
-		List<File> files = new ArrayList<File>();
+		List<File> files = new ArrayList<>();
 		try {
 			rootFile = new File(root);
 			if (rootFile.isDirectory()) {
@@ -70,7 +70,7 @@ public class Scanner {
 			ErrorHandler.patternIsNULL();
 		}
 
-		List<File> projectFiles = new ArrayList<File>();
+		List<File> projectFiles = new ArrayList<>();
 		String fileName;
 
 		if (!programmingLanguage.equals(ProgrammingLanguage.CPP)) {
@@ -120,7 +120,7 @@ public class Scanner {
 			ErrorHandler.fileNotExist();
 		}
 
-		List<String> text = new ArrayList<String>();
+		List<String> text = new ArrayList<>();
 		FileReader fileReader = null;
 		BufferedReader buffer = null;
 		Integer line = null;
