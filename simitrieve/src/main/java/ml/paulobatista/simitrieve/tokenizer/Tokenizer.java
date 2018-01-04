@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import ml.paulobatista.simitrieve.filter.CamelCaseTool;
 import ml.paulobatista.simitrieve.filter.Cleaner;
 
 public class Tokenizer {
@@ -26,6 +27,16 @@ public class Tokenizer {
 		return tokens;
 	}
 	
+	private List<String> cleanWordList(List<String> wordList) {
+		List<String> cleanWordList = new ArrayList<>();
+		Cleaner cleaner = new Cleaner();
+		
+		cleanWordList = cleaner.removeBlanckLine(wordList);
+		cleanWordList = cleaner.removeDigits(cleanWordList);
+		cleanWordList = cleaner.removeJunkWords(cleanWordList);
+		
+		return cleanWordList;
+	}
 	
 	public List<String> tokenize(List<String> sourceCode) {
 		List<String> tokenized = new ArrayList<>();
@@ -35,12 +46,10 @@ public class Tokenizer {
 			tokenized.addAll(tokenizeString(line));
 		}
 		
-		Cleaner cleaner = new Cleaner();
+		tokenized = cleanWordList(tokenized);
 		
-		tokenized = cleaner.removeBlanckLine(tokenized);
-		tokenized = cleaner.removeDigits(tokenized);
-		tokenized = cleaner.removeJunkWords(tokenized);
 		return tokenized;
+		
 	}
 	
 	//public List<String> tokenize(List<String> sourceCode, camelcase)
