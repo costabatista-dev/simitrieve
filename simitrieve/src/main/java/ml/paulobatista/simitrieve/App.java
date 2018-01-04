@@ -1,14 +1,16 @@
 package ml.paulobatista.simitrieve;
 
 import java.io.File;
+import java.util.List;
 
-import ml.paulobatista.simitrieve.entity.ProgrammingLanguage;
-import ml.paulobatista.simitrieve.entity.Project;
-import ml.paulobatista.simitrieve.entity.Package;
 import ml.paulobatista.simitrieve.csv.CSVManager;
 import ml.paulobatista.simitrieve.entity.Class;
+import ml.paulobatista.simitrieve.entity.Package;
+import ml.paulobatista.simitrieve.entity.ProgrammingLanguage;
+import ml.paulobatista.simitrieve.entity.Project;
 import ml.paulobatista.simitrieve.entity.factory.ProjectFactory;
-import ml.paulobatista.simitrieve.scan.feature.FeatureScanner;
+import ml.paulobatista.simitrieve.filter.CommentRemover;
+import ml.paulobatista.simitrieve.tokenizer.Tokenizer;
 /**
  * Hello world!
  *
@@ -19,9 +21,25 @@ public class App {
 		//System.out.println(root);
 		Project project = new ProjectFactory().getProject(root, ProgrammingLanguage.JAVA);
 		project.setVersion("4.0");
+		
+		List<String> text;
+		for (Package pack : project.getPackages()) {
+			for(Class c  : pack.getClasses()) {
+				text = c.getSourceCode();
+				text = new CommentRemover().removeJavaComments(text);
+				text = new Tokenizer().tokenize(text);
+				
+				for(String line : text) {
+					System.out.println(line);
+				}
+			}
+		}
 		CSVManager csvManager = new CSVManager();
 		
 		csvManager.writeProjectFeaturesCSV(project);
+		
+		
+		
 		
 		//FeatureScanner fScanner = new FeatureScanner();
 		
