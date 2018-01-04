@@ -8,7 +8,6 @@ public class Tokenizer {
 	
 	
 	public List<String> tokenizeString(String text) {
-		//not supported yet.
 		StringTokenizer tokenizer = new StringTokenizer(text, "");
 		int size = tokenizer.countTokens();
 		
