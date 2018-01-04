@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import ml.paulobatista.simitrieve.filter.CamelCaseTool;
 import ml.paulobatista.simitrieve.filter.Cleaner;
 
 public class Tokenizer {
