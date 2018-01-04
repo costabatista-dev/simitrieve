@@ -13,7 +13,7 @@ public class Tokenizer {
 		StringTokenizer tokenizer = new StringTokenizer(text, " ");
 		int size = tokenizer.countTokens();
 		
-		List<String> tokens = new ArrayList<String>();
+		List<String> tokens = new ArrayList<>();
 		
 		for(int index = 0; index < size; index++ ) {
 			tokens.add(tokenizer.nextToken());
@@ -28,7 +28,7 @@ public class Tokenizer {
 	
 	
 	public List<String> tokenize(List<String> sourceCode) {
-		List<String> tokenized = new ArrayList<String>();
+		List<String> tokenized = new ArrayList<>();
 		
 		for(String line : sourceCode) {
 			
@@ -39,6 +39,7 @@ public class Tokenizer {
 		
 		tokenized = cleaner.removeBlanckLine(tokenized);
 		tokenized = cleaner.removeDigits(tokenized);
+		tokenized = cleaner.removeJunkWords(tokenized);
 		return tokenized;
 	}
 	

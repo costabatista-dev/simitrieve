@@ -8,7 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 public class Cleaner {
 	
 	public List<String> removeBlanckLine(List<String> sourceCode) {
-		List<String> filtered = new ArrayList<String>();
+		List<String> filtered = new ArrayList<>();
 		
 		for(String line : sourceCode) {
 			if(!line.trim().isEmpty() || line.matches("\\s+")) {
@@ -18,7 +18,7 @@ public class Cleaner {
 		return filtered;
 	}
 	public List<String> removeNonWordCharacters(List<String> sourceCode) {
-		List<String> sourceCodeWithoutNonWordCharacters = new ArrayList<String>();
+		List<String> sourceCodeWithoutNonWordCharacters = new ArrayList<>();
 		
 		for(String line : sourceCode) {
 			sourceCodeWithoutNonWordCharacters.addAll(removeNonWordCharacters(line));
@@ -28,7 +28,7 @@ public class Cleaner {
 	}
 	
 	public List<String> removeNonWordCharacters(String text) {
-		List<String> withoutNonWOrdCharacter = new ArrayList<String>();
+		List<String> withoutNonWOrdCharacter = new ArrayList<>();
 		
 		String[] splittedText = text.split("[\\W]");
 		
@@ -39,14 +39,26 @@ public class Cleaner {
 		return withoutNonWOrdCharacter;
 	}
 	
-	public List<String> removeDigits(List<String> sourceCode) {
-		List<String> filtered = new ArrayList<String>();
+	public List<String> removeDigits(List<String> wordList) {
+		List<String> filtered = new ArrayList<>();
 		
-		for(String line : sourceCode) {
+		for(String line : wordList) {
 			if(!StringUtils.isNumeric(line)) {
 				filtered.add(line);
 			}
 		}
+		return filtered;
+	}
+	
+	public List<String> removeJunkWords(List<String> wordList) {
+		List<String> filtered = new ArrayList<>();
+		
+		for(String word: wordList) {
+			if(word.length() >= 3) {
+				filtered.add(word);
+			}
+		}
+		
 		return filtered;
 	}
 }

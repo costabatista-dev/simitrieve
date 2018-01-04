@@ -34,7 +34,7 @@ public class CSVManager {
 		
 		String[] header = new String[] {"Feature", "Value"};
 		
-		List<String[]> info = new ArrayList<String[]>();
+		List<String[]> info = new ArrayList<>();
 		
 		info.add(new String[] {"Name", projectName});
 		info.add(new String[] {"Version", version});

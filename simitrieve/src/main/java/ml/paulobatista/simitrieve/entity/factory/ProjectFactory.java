@@ -43,7 +43,7 @@ public class ProjectFactory {
 	}
 	
 	public List<Package> getPackageList(List<Class> classes, String projectName) {
-		List<Package> packages = new ArrayList<Package>();
+		List<Package> packages = new ArrayList<>();
 		String packageName =  null;
 		
 		for (Class classIterator : classes) {
@@ -60,7 +60,7 @@ public class ProjectFactory {
 	}
 
 	public List<Class> getClassList(List<File> files) {
-		List<Class> classes = new ArrayList<Class>();
+		List<Class> classes = new ArrayList<>();
 
 		for (File iteratorFile : files) {
 			classes.add(getClassInstance(iteratorFile));
@@ -84,7 +84,7 @@ public class ProjectFactory {
 
 		String packageName = getPackageName(classFile, projectName);
 		
-		List<Class> classes = new ArrayList<Class>();
+		List<Class> classes = new ArrayList<>();
 		classes.add(classFile);
 		
 		Package pack = new Package(packageName, classes);		
