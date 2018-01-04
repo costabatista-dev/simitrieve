@@ -39,6 +39,7 @@ public class Tokenizer {
 		
 		tokenized = cleaner.removeBlanckLine(tokenized);
 		tokenized = cleaner.removeDigits(tokenized);
+		tokenized = cleaner.removeJunkWords(tokenized);
 		return tokenized;
 	}
 	

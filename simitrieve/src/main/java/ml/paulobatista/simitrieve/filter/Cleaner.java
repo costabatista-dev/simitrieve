@@ -39,14 +39,26 @@ public class Cleaner {
 		return withoutNonWOrdCharacter;
 	}
 	
-	public List<String> removeDigits(List<String> sourceCode) {
+	public List<String> removeDigits(List<String> wordList) {
 		List<String> filtered = new ArrayList<>();
 		
-		for(String line : sourceCode) {
+		for(String line : wordList) {
 			if(!StringUtils.isNumeric(line)) {
 				filtered.add(line);
 			}
 		}
+		return filtered;
+	}
+	
+	public List<String> removeJunkWords(List<String> wordList) {
+		List<String> filtered = new ArrayList<>();
+		
+		for(String word: wordList) {
+			if(word.length() >= 3) {
+				filtered.add(word);
+			}
+		}
+		
 		return filtered;
 	}
 }
