@@ -6,7 +6,7 @@ package ml.paulobatista.simitrieve.filter;
 import java.util.ArrayList;
 import java.util.List;
 
-import ml.paulobatista.simitrieve.entity.ProgrammingLanguage;
+import ml.paulobatista.simitrieve.entity.process.ProgrammingLanguage;
 
 /**
  * @author costa

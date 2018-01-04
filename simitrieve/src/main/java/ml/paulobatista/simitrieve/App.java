@@ -6,9 +6,9 @@ import java.util.List;
 import ml.paulobatista.simitrieve.csv.CSVManager;
 import ml.paulobatista.simitrieve.entity.Class;
 import ml.paulobatista.simitrieve.entity.Package;
-import ml.paulobatista.simitrieve.entity.ProgrammingLanguage;
 import ml.paulobatista.simitrieve.entity.Project;
 import ml.paulobatista.simitrieve.entity.factory.ProjectFactory;
+import ml.paulobatista.simitrieve.entity.process.ProgrammingLanguage;
 import ml.paulobatista.simitrieve.filter.CommentRemover;
 import ml.paulobatista.simitrieve.tokenizer.Tokenizer;
 /**

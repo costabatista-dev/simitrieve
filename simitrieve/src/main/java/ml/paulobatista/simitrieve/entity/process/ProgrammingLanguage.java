@@ -1,7 +1,7 @@
 /**
  * 
  */
-package ml.paulobatista.simitrieve.entity;
+package ml.paulobatista.simitrieve.entity.process;
 
 /**
  * @author paulo
