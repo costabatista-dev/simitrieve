@@ -53,7 +53,12 @@ public class ErrorHandler {
 
 	public static void tokenListDoNotContainsToken(String value) {
 		System.out.println("Unexpected Error: project do not contains value - " + value);
-		System.exit(Error.TOKENLIST_DO_NOT_CONTAINS_VALUE.getCode());
+		System.exit(Error.TOKENLIST_DO_NOT_CONTAINS_VALUE_ERROR.getCode());
+	}
+	
+	public static void errorInDictionaryReading(String message) {
+		System.out.println("Unexpected Error: " + message);
+		System.exit(Error.DICTIONARY_READING_ERROR.getCode());
 	}
 	
 	

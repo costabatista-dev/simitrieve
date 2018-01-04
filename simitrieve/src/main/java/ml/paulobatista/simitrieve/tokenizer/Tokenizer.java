@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import ml.paulobatista.simitrieve.entity.ProgrammingLanguage;
 import ml.paulobatista.simitrieve.filter.Cleaner;
+import ml.paulobatista.simitrieve.filter.Dictionary;
+
 
 public class Tokenizer {
 	
