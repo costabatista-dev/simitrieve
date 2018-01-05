@@ -11,6 +11,7 @@ import ml.paulobatista.simitrieve.entity.factory.ProjectFactory;
 import ml.paulobatista.simitrieve.entity.process.CamelCase;
 import ml.paulobatista.simitrieve.entity.process.Comment;
 import ml.paulobatista.simitrieve.entity.process.ProgrammingLanguage;
+import ml.paulobatista.simitrieve.entity.process.Quantile;
 import ml.paulobatista.simitrieve.entity.process.Stem;
 import ml.paulobatista.simitrieve.process.Process;
 import ml.paulobatista.simitrieve.tokenizer.TokenManager;
@@ -30,7 +31,7 @@ public class App {
 		process.setCamelCase(CamelCase.YES);
 		process.setComment(Comment.NO);
 		process.setStem(Stem.YES);
-		
+		process.setQuantile(Quantile.FIRST);
 		TokenManager tokenManager = new TokenManager();
 		
 		List<TokenList> allTokenLists = tokenManager.getAllTokenList(project, process);
