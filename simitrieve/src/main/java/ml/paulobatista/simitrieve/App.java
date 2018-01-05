@@ -4,16 +4,16 @@ import java.io.File;
 import java.util.List;
 
 import ml.paulobatista.simitrieve.csv.CSVManager;
-import ml.paulobatista.simitrieve.entity.Class;
-import ml.paulobatista.simitrieve.entity.Package;
 import ml.paulobatista.simitrieve.entity.Project;
+import ml.paulobatista.simitrieve.entity.Token;
+import ml.paulobatista.simitrieve.entity.TokenList;
 import ml.paulobatista.simitrieve.entity.factory.ProjectFactory;
 import ml.paulobatista.simitrieve.entity.process.CamelCase;
 import ml.paulobatista.simitrieve.entity.process.Comment;
 import ml.paulobatista.simitrieve.entity.process.ProgrammingLanguage;
 import ml.paulobatista.simitrieve.entity.process.Stem;
 import ml.paulobatista.simitrieve.process.Process;
-import ml.paulobatista.simitrieve.tokenizer.Tokenizer;
+import ml.paulobatista.simitrieve.tokenizer.TokenManager;
 /**
  * Hello world!
  *
@@ -21,7 +21,7 @@ import ml.paulobatista.simitrieve.tokenizer.Tokenizer;
 public class App {
 	public static void main(String[] args) {
 		String root = System.getProperty("user.dir") + File.separator + "jabref-4.0";
-		//System.out.println(root);
+	
 		Project project = new ProjectFactory().getProject(root, ProgrammingLanguage.JAVA);
 		project.setVersion("4.0");
 		
@@ -31,19 +31,29 @@ public class App {
 		process.setComment(Comment.NO);
 		process.setStem(Stem.YES);
 		
-		List<String> text;
-		for (Package pack : project.getPackages()) {
-			for(Class c  : pack.getClasses()) {
-				text = c.getSourceCode();
-				text = new Tokenizer().tokenize(text, process);
-				//text = new CommentRemover().removeJavaComments(text);
-				//text = new Tokenizer().tokenize(text);
-				
-				for(String line : text) {
-					System.out.println(line);
-				}
-			}
+		TokenManager tokenManager = new TokenManager();
+		
+		List<TokenList> allTokenLists = tokenManager.getAllTokenList(project, process);
+		
+		TokenList tokenListProject = tokenManager.getProjectTokenList(allTokenLists);
+		
+		for(Token token : tokenListProject) {
+			System.out.println("word: " + token.getValue());
+			System.out.println("quantity " + token.getQuantity());
+			System.out.println("------------");
 		}
+		
+		System.out.println("Size of token project list: " + tokenListProject.size());
+		/*for(TokenList tokenList: allTokenLists) {
+			System.out.println("Package: " + tokenList.getPackageName());
+			System.out.println("Class: " + tokenList.getClassName());
+			
+			for(Token token : tokenList) {
+				System.out.println("word: " + token.getValue());
+				System.out.println("quantity " + token.getQuantity());
+			}
+		}*/
+	
 		CSVManager csvManager = new CSVManager();
 		
 		csvManager.writeProjectFeaturesCSV(project);

@@ -20,7 +20,7 @@ public class TokenList extends ArrayList<Token> {
 		
 	}
 	
-	public TokenList(String className, String packageName) {
+	public TokenList(String packageName, String className) {
 		this.className = className;
 		this.packageName = packageName;
 	}
