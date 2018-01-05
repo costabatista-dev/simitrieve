@@ -12,6 +12,7 @@ import ml.paulobatista.simitrieve.entity.Package;
 import ml.paulobatista.simitrieve.entity.Project;
 import ml.paulobatista.simitrieve.entity.Token;
 import ml.paulobatista.simitrieve.entity.TokenList;
+import ml.paulobatista.simitrieve.entity.process.Quantile;
 import ml.paulobatista.simitrieve.process.Process;
 
 /**
@@ -67,7 +68,7 @@ public class TokenManager {
 			
 			allTokenLists.add(getTokenList(sourceCode, process, packageName, className));
 		}
-		
+
 		return allTokenLists;
 	}
 
@@ -84,7 +85,16 @@ public class TokenManager {
 		for (String word : tokenized) {
 			addTokenToTokenList(tokenList, word);
 		}
+		
+		
 		Collections.sort(tokenList);
+		
+		Quantile quantile = process.getQuantile();
+		
+		if(!quantile.equals(Quantile.FOURTH)) {
+			tokenList = applyQuantileSelection(tokenList, quantile);
+		}
+		
 		return tokenList;
 
 	}
@@ -106,5 +116,21 @@ public class TokenManager {
 		else {
 			tokenList.addQuantity(token.getValue(), token.getQuantity());
 		}
+	}
+	
+	private TokenList applyQuantileSelection(TokenList tokenList, Quantile quantile) {
+		Collections.sort(tokenList);
+	
+		double size =  quantile.getValue() * tokenList.size();
+		 TokenList lesserTokenList = new TokenList();
+		Token token = null;
+		
+		for(int index = 0; index < size; index++) {
+			token = tokenList.get(index);
+			lesserTokenList.add(token);
+		}
+		
+		return lesserTokenList;
+		
 	}
 }
