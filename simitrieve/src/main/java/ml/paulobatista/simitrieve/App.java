@@ -75,6 +75,7 @@ public class App {
 		
 		csvManager.writeProjectFeaturesCSV(project);
 		
+		csvManager.writeProjectSimilarityCSV(similarities, project, process);
 		
 		
 

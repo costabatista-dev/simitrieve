@@ -136,11 +136,12 @@ public class SimilarityRetriever {
 		
 		double cosine = (product/divisor);
 		
-		cosine = truncate(cosine);
+
 		
 		return cosine;
 	}
 	
+	@SuppressWarnings("unused")
 	private double truncate(double value) {
 		double truncated = Math.round(value * 100) / 100d;
 		
