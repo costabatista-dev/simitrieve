@@ -7,7 +7,7 @@ package ml.paulobatista.simitrieve.entity;
  * @author costa
  *
  */
-public class Token {
+public class Token implements Comparable{
 	private String value;
 	private int quantity;
 	
@@ -41,5 +41,20 @@ public class Token {
 	
 	public int getQuantity() {
 		return this.quantity;
+	}
+
+	@Override
+	public int compareTo(Object anotherObject) {
+		Token anotherToken = (Token) anotherObject;
+		
+		if(this.quantity < anotherToken.getQuantity()) {
+			return 1;
+		}
+		
+		if(this.quantity > anotherToken.getQuantity()) {
+			return -1;
+		}
+		
+		return 0;
 	}
 }
