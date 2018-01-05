@@ -95,6 +95,8 @@ public class TokenManager {
 			tokenList = applyQuantileSelection(tokenList, quantile);
 		}
 		
+		tokenList.setClassName(className);
+		tokenList.setPackageName(packageName);
 		return tokenList;
 
 	}

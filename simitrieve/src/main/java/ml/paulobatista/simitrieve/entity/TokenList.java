@@ -129,4 +129,18 @@ public class TokenList extends ArrayList<Token> {
 		int index = getIndexOf(value);
 		this.get(index).setQuantity(quantity);
 	}
+	
+	public int getQuantity(String value) {
+		for(Token token : this) {
+			String word = token.getValue();
+			
+			if(word.equals(value)) {
+				return token.getQuantity();
+			}
+		}
+		
+		return -1;
+	}
+	
+
 }
