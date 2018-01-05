@@ -9,8 +9,8 @@ import java.util.List;
 
 import ml.paulobatista.simitrieve.entity.Class;
 import ml.paulobatista.simitrieve.entity.Package;
-import ml.paulobatista.simitrieve.entity.ProgrammingLanguage;
 import ml.paulobatista.simitrieve.entity.Project;
+import ml.paulobatista.simitrieve.entity.process.ProgrammingLanguage;
 import ml.paulobatista.simitrieve.error.ErrorHandler;
 import ml.paulobatista.simitrieve.scan.Pattern;
 import ml.paulobatista.simitrieve.scan.Scanner;

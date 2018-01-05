@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import ml.paulobatista.simitrieve.entity.ProgrammingLanguage;
+import ml.paulobatista.simitrieve.filter.CamelCaseTool;
 import ml.paulobatista.simitrieve.filter.Cleaner;
+import ml.paulobatista.simitrieve.filter.CommentRemover;
 import ml.paulobatista.simitrieve.filter.Dictionary;
-
+import ml.paulobatista.simitrieve.filter.WordStemmer;
+import ml.paulobatista.simitrieve.process.Process;
 
 public class Tokenizer {
 	
@@ -54,6 +56,60 @@ public class Tokenizer {
 		
 	}
 	
-	//public List<String> tokenize(List<String> sourceCode, camelcase)
+	
+	private List<String> toLowerCaseWordList(List<String> wordList) {
+		List<String> lowerList = new ArrayList<>();
+		
+		for(String word : wordList) {
+			lowerList.add(word.toLowerCase());
+		}
+		
+		return lowerList;
+	}
+	
+	public List<String> tokenize(List<String> sourceCode, Process process) {
+		List<String> tokenized = new ArrayList<>();
+		
+		if(!process.getComment().getOption()) {
+			CommentRemover commentRemover = new CommentRemover();
+			
+			sourceCode = commentRemover.removeComments(sourceCode, process.getProgrammingLanguage());
+		}
+		
+		tokenized = tokenize(sourceCode);
+		
+		Dictionary dictionary = new Dictionary(process.getProgrammingLanguage());
+		
+		
+		tokenized = dictionary.removeStopwords(tokenized);
+		
+		if(process.getCamelCase().getOption()) {
+			CamelCaseTool camelCaseTool = new CamelCaseTool();
+			tokenized = camelCaseTool.splitWordList(tokenized);
+			
+			Cleaner cleaner = new Cleaner();
+			
+			tokenized = cleaner.removeDigits(tokenized);
+			tokenized = cleaner.removeJunkWords(tokenized);
+		}
+		
+		if(process.getStem().getOption()) {
+			WordStemmer wordStemmer = new WordStemmer();
+			
+			tokenized = wordStemmer.wordListStemming(tokenized);
+			
+			Cleaner cleaner = new Cleaner();
+			
+			tokenized = cleaner.removeJunkWords(tokenized);
+			
+		}
+		
+		
+		tokenized = toLowerCaseWordList(tokenized);
+		
+		return tokenized;
+	}
+	
+
 	
 }

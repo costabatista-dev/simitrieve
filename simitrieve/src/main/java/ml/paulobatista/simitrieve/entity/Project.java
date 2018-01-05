@@ -2,6 +2,8 @@ package ml.paulobatista.simitrieve.entity;
 
 import java.util.List;
 
+import ml.paulobatista.simitrieve.entity.process.ProgrammingLanguage;
+
 public class Project {
 	private String name; 
 	private String version;

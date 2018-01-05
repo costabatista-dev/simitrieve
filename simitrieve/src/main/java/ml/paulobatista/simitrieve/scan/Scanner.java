@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import ml.paulobatista.simitrieve.entity.ProgrammingLanguage;
+import ml.paulobatista.simitrieve.entity.process.ProgrammingLanguage;
 import ml.paulobatista.simitrieve.error.ErrorHandler;
 
 /**
