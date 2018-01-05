@@ -8,8 +8,11 @@ import ml.paulobatista.simitrieve.entity.Class;
 import ml.paulobatista.simitrieve.entity.Package;
 import ml.paulobatista.simitrieve.entity.Project;
 import ml.paulobatista.simitrieve.entity.factory.ProjectFactory;
+import ml.paulobatista.simitrieve.entity.process.CamelCase;
+import ml.paulobatista.simitrieve.entity.process.Comment;
 import ml.paulobatista.simitrieve.entity.process.ProgrammingLanguage;
-import ml.paulobatista.simitrieve.filter.CommentRemover;
+import ml.paulobatista.simitrieve.entity.process.Stem;
+import ml.paulobatista.simitrieve.process.Process;
 import ml.paulobatista.simitrieve.tokenizer.Tokenizer;
 /**
  * Hello world!
@@ -22,12 +25,19 @@ public class App {
 		Project project = new ProjectFactory().getProject(root, ProgrammingLanguage.JAVA);
 		project.setVersion("4.0");
 		
+		Process process = new Process();
+		process.setProgrammingLanguage(ProgrammingLanguage.JAVA);
+		process.setCamelCase(CamelCase.YES);
+		process.setComment(Comment.NO);
+		process.setStem(Stem.YES);
+		
 		List<String> text;
 		for (Package pack : project.getPackages()) {
 			for(Class c  : pack.getClasses()) {
 				text = c.getSourceCode();
-				text = new CommentRemover().removeJavaComments(text);
-				text = new Tokenizer().tokenize(text);
+				text = new Tokenizer().tokenize(text, process);
+				//text = new CommentRemover().removeJavaComments(text);
+				//text = new Tokenizer().tokenize(text);
 				
 				for(String line : text) {
 					System.out.println(line);
