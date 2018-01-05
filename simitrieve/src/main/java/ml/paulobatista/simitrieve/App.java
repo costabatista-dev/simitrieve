@@ -35,7 +35,16 @@ public class App {
 		
 		List<TokenList> allTokenLists = tokenManager.getAllTokenList(project, process);
 		
-		for(TokenList tokenList: allTokenLists) {
+		TokenList tokenListProject = tokenManager.getProjectTokenList(allTokenLists);
+		
+		for(Token token : tokenListProject) {
+			System.out.println("word: " + token.getValue());
+			System.out.println("quantity " + token.getQuantity());
+			System.out.println("------------");
+		}
+		
+		System.out.println("Size of token project list: " + tokenListProject.size());
+		/*for(TokenList tokenList: allTokenLists) {
 			System.out.println("Package: " + tokenList.getPackageName());
 			System.out.println("Class: " + tokenList.getClassName());
 			
@@ -43,7 +52,7 @@ public class App {
 				System.out.println("word: " + token.getValue());
 				System.out.println("quantity " + token.getQuantity());
 			}
-		}
+		}*/
 	
 		CSVManager csvManager = new CSVManager();
 		

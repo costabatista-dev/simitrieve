@@ -27,8 +27,18 @@ public class TokenManager {
 	}
 	
 	public TokenList getProjectTokenList(List<TokenList> tokenLists) {
-		//not supported yet.
-		return null;
+		TokenList tokenList = new TokenList();
+		
+		for(TokenList tokenListIterator : tokenLists) {
+			for(Token token : tokenListIterator) {
+				addTokenToTokenList(tokenList, token);
+			}
+		}
+		
+		
+		Collections.sort(tokenList);
+		
+		return tokenList;
 	}
 
 	public List<TokenList> getAllTokenList(Project project, Process process) {
@@ -62,7 +72,7 @@ public class TokenManager {
 	}
 
 	
-	@SuppressWarnings("unchecked")
+
 	public TokenList getTokenList(List<String> wordList, Process process, String packageName, String className) {
 		TokenList tokenList = new TokenList(packageName, className);
 		
@@ -85,6 +95,16 @@ public class TokenManager {
 			tokenList.add(token);
 		} else {
 			tokenList.addQuantity(word);
+		}
+	}
+	
+	private void addTokenToTokenList(TokenList tokenList, Token token) {
+		if (!tokenList.contains(token.getValue())) {
+			tokenList.add(token);
+		}
+		
+		else {
+			tokenList.addQuantity(token.getValue(), token.getQuantity());
 		}
 	}
 }
