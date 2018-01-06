@@ -14,6 +14,7 @@ import ml.paulobatista.simitrieve.entity.Token;
 import ml.paulobatista.simitrieve.entity.TokenList;
 import ml.paulobatista.simitrieve.entity.process.Normalization;
 import ml.paulobatista.simitrieve.process.Process;
+import ml.paulobatista.simitrieve.similarity.normalization.LSIManager;
 import ml.paulobatista.simitrieve.similarity.normalization.TFIDFManager;
 /**
  * @author Paulo Batista
@@ -22,18 +23,56 @@ import ml.paulobatista.simitrieve.similarity.normalization.TFIDFManager;
 public class SimilarityRetriever {
 
 
-	public List<CosineSimilarity> getCosineSimilarities(List<TokenList> allTokenList, Process process) {
+	public List<CosineSimilarity> getCosineSimilarities(List<TokenList> allTokenLists, Process process) {
 		Normalization normalization = process.getNormalization();
 		if(normalization.equals(Normalization.NAIVE)) {
-			return getCosineSimilarityNaiveNormalization(allTokenList);
+			return getCosineSimilarityNaiveNormalization(allTokenLists);
 		}
 		else if(normalization.equals(Normalization.TFIDF)) {
-			return getCosineSimilarityTFIDFNormalization(allTokenList);
+			return getCosineSimilarityTFIDFNormalization(allTokenLists);
+		}
+		else if(normalization.equals(Normalization.LSI)) {
+			return getCosineSimilarityLSINormalization(allTokenLists);
 		}
 		else {
 			//error threat.
 		}
 		return null;
+	}
+	
+	private List<CosineSimilarity> getCosineSimilarityLSINormalization(List<TokenList> allTokenLists) {
+		BagOfWords bagOfWords = new BagOfWords(allTokenLists);
+		List<String> classes = bagOfWords.getClasses();
+		Map<String, String> packages = bagOfWords.getPackages();
+		LSIManager lsiManager = new LSIManager();
+		
+		double[][] lsiValues = lsiManager.getLSI(bagOfWords);
+		
+		List<CosineSimilarity> similarities = new ArrayList<>();
+		
+		for(int index1 = 0; index1 < classes.size(); index1++) {
+			for(int index2 = index1 + 1; index2 < classes.size(); index2++) {
+				String firstClass = classes.get(index1);
+				String secondClass = classes.get(index2);
+				String firstPackage = packages.get(firstClass);
+				String secondPackage = packages.get(secondClass);
+				
+				double[] firstArray = lsiManager.getColumnFromArray(lsiValues, index1);
+				double[] secondArray = lsiManager.getColumnFromArray(lsiValues, index2);
+				
+				CosineSimilarity cosineSimilarity = new CosineSimilarity(firstClass, secondClass);
+				
+				cosineSimilarity.setFirstPackage(firstPackage);
+				cosineSimilarity.setSecondPackage(secondPackage);
+				
+				setCosineSimilarity(cosineSimilarity, firstArray, secondArray);
+				
+				similarities.add(cosineSimilarity);
+				
+			}
+		}
+		
+		return similarities;
 	}
 	
 	private List<CosineSimilarity> getCosineSimilarityTFIDFNormalization(List<TokenList> allTokenLists) {
@@ -61,7 +100,7 @@ public class SimilarityRetriever {
 				cosineSimilarity.setFirstPackage(firstPackage);
 				cosineSimilarity.setSecondPackage(secondPackage);
 				
-				setCosineSimilarityTFIDFNormalizationValue(cosineSimilarity, firstArray, secondArray);
+				setCosineSimilarity(cosineSimilarity, firstArray, secondArray);
 				
 				similarities.add(cosineSimilarity);
 			}
@@ -71,7 +110,7 @@ public class SimilarityRetriever {
 		
 	}
 	
-	private CosineSimilarity setCosineSimilarityTFIDFNormalizationValue(CosineSimilarity cosineSimilarity, double[] firstArray, double[] secondArray) {
+	private CosineSimilarity setCosineSimilarity(CosineSimilarity cosineSimilarity, double[] firstArray, double[] secondArray) {
 		double similarity = getCosineSimilarity(firstArray, secondArray);
 		
 		cosineSimilarity.setSimilarity(similarity);

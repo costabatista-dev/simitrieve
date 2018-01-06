@@ -2,13 +2,10 @@ package ml.paulobatista.simitrieve;
 
 import java.io.File;
 import java.util.List;
-import java.util.Map;
 
 import ml.paulobatista.simitrieve.csv.CSVManager;
-import ml.paulobatista.simitrieve.entity.BagOfWords;
 import ml.paulobatista.simitrieve.entity.CosineSimilarity;
 import ml.paulobatista.simitrieve.entity.Project;
-import ml.paulobatista.simitrieve.entity.Token;
 import ml.paulobatista.simitrieve.entity.TokenList;
 import ml.paulobatista.simitrieve.entity.factory.ProjectFactory;
 import ml.paulobatista.simitrieve.entity.process.CamelCase;
@@ -19,7 +16,6 @@ import ml.paulobatista.simitrieve.entity.process.Quantile;
 import ml.paulobatista.simitrieve.entity.process.Stem;
 import ml.paulobatista.simitrieve.process.Process;
 import ml.paulobatista.simitrieve.similarity.SimilarityRetriever;
-import ml.paulobatista.simitrieve.similarity.normalization.TFIDFManager;
 import ml.paulobatista.simitrieve.tokenizer.TokenManager;
 
 /**
@@ -40,12 +36,12 @@ public class App {
 		process.setComment(Comment.NO);
 		process.setStem(Stem.YES);
 		process.setQuantile(Quantile.FIRST);
-		process.setNormalization(Normalization.TFIDF);
+		process.setNormalization(Normalization.LSI);
 		TokenManager tokenManager = new TokenManager();
 		
 		List<TokenList> allTokenLists = tokenManager.getAllTokenList(project, process);
 		
-		TokenList tokenListProject = tokenManager.getProjectTokenList(allTokenLists);
+		//TokenList tokenListProject = tokenManager.getProjectTokenList(allTokenLists);
 		
 		/*for(Token token : tokenListProject) {
 			System.out.println("word: " + token.getValue());
@@ -53,27 +49,11 @@ public class App {
 			System.out.println("------------");
 		}*/
 		
-		System.out.println("Size of token project list: " + tokenListProject.size());
-		for(TokenList tokenList: allTokenLists) {
-			System.out.println("Package: " + tokenList.getPackageName());
-			System.out.println("Class: " + tokenList.getClassName());
-			
-			for(Token token : tokenList) {
-				System.out.println("word: " + token.getValue());
-				System.out.println("quantity " + token.getQuantity());
-			}
-		}
+
 		
 		List<CosineSimilarity> similarities = new SimilarityRetriever().getCosineSimilarities(allTokenLists, process);
 	
-		for(CosineSimilarity cosineSimilarity : similarities) {
-			System.out.println("First Package: " + cosineSimilarity.getFirstPackage());
-			System.out.println("First Class: " + cosineSimilarity.getFirstClass());
-			System.out.println("Second Package: " + cosineSimilarity.getSecondPackage());
-			System.out.println("Second Class: " + cosineSimilarity.getSecondClass());
-			System.out.println("Similarity: " + cosineSimilarity.getSimilarity());
-		}
-		
+	
 		CSVManager csvManager = new CSVManager();
 		
 		csvManager.writeProjectFeaturesCSV(project);
@@ -81,56 +61,10 @@ public class App {
 		csvManager.writeProjectSimilarityCSV(similarities, project, process);
 		
 		
-		BagOfWords bagOfWords = new BagOfWords(allTokenLists);
+		//BagOfWords bagOfWords = new BagOfWords(allTokenLists);
 		
-		double[][] values = bagOfWords.getValues();
-		
-		for(int line = 0; line < values.length; line++) {
-			for(int column = 0; column < values[line].length; column++) {
-				System.out.println(values[line][column]);
-			}
-		}
-		
-		
-		Map<String, String> map = bagOfWords.getPackages();
-		
-		for(String className : map.keySet()) {
-			System.out.println(map.get(className));
-			System.out.println(className);
-		}
-		
-		
-		TFIDFManager tfidfManager = new TFIDFManager();
-		
-		double[][] tfValues = tfidfManager.getTF(bagOfWords);
-		
-		for(int line = 0; line < tfValues.length; line++) {
-			for(int column = 0; column < tfValues[line].length; column++) {
-				System.out.println(tfValues[line][column]);
-			}
-		}
-		
-		
-		System.out.println("idf values\n\n\n");
-		
-		Map<String, Double> idfValues = tfidfManager.getIDF(bagOfWords, allTokenLists);
-		
-		for(String key : idfValues.keySet()) {
-			System.out.println("key: " + key);
-			System.out.println("value: " + idfValues.get(key));
-		}
-		
-		double[][] tfidfValues = tfidfManager.getTFIDF(bagOfWords, allTokenLists);
-		
-		
-		System.out.println("tfidf values\n\n\n");
-		
-		for(int line = 0; line < tfidfValues.length; line++) {
-			for(int column = 0; column < tfidfValues[line].length; column++) {
-				System.out.println(tfidfValues[line][column]);
-			}
-		}
-		
+	
+	
 		
 
 		//FeatureScanner fScanner = new FeatureScanner();
