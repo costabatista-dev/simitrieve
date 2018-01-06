@@ -119,6 +119,19 @@ public class App {
 			System.out.println("key: " + key);
 			System.out.println("value: " + idfValues.get(key));
 		}
+		
+		double[][] tfidfValues = tfidfManager.getTFIDF(bagOfWords, allTokenLists);
+		
+		
+		System.out.println("tfidf values\n\n\n");
+		
+		for(int line = 0; line < tfidfValues.length; line++) {
+			for(int column = 0; column < tfidfValues[line].length; column++) {
+				System.out.println(tfidfValues[line][column]);
+			}
+		}
+		
+		
 
 		//FeatureScanner fScanner = new FeatureScanner();
 		

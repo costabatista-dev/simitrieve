@@ -16,6 +16,34 @@ import ml.paulobatista.simitrieve.entity.TokenList;
  */
 public class TFIDFManager {
 
+	
+	public double[][] getTFIDF(BagOfWords bagOfWords, List<TokenList> allTokenLists) {
+		Map<String, Double> idfValues = getIDF(bagOfWords, allTokenLists);
+		double[][] tfValues = getTF(bagOfWords);		
+		
+		List<String> words = bagOfWords.getWords();
+		List<String> classes = bagOfWords.getClasses();
+		
+		int columnsLength = classes.size();
+		int linesLength = words.size();
+		
+		double[][] tfidfValues = new double[linesLength][columnsLength];
+		
+		for(int column = 0; column < columnsLength; column++) {
+			for(int line = 0; line < linesLength; line++) {
+				String word = words.get(line);
+				double idfValue = idfValues.get(word);
+				tfidfValues[line][column] = tfValues[line][column] * idfValue; 
+			}
+		}
+		
+		return tfidfValues;
+		
+	}
+	
+	
+	
+	
 	public double[][] getTF(BagOfWords bagOfWords) {
 		List<String> classes = bagOfWords.getClasses();
 		List<String> words = bagOfWords.getWords();
