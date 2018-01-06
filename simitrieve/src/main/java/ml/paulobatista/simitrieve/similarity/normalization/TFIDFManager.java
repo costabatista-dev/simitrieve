@@ -14,6 +14,36 @@ import ml.paulobatista.simitrieve.entity.BagOfWords;
 public class TFIDFManager {
 	
 	public double[][] getTF(BagOfWords bagOfWords) {
+		List<String> classes = bagOfWords.getClasses();
+		List<String> words = bagOfWords.getWords();
+		
+		double[][] values = new double[words.size()][classes.size()];
+		
+		for(int column = 0; column < classes.size(); column++) {
+			String className = classes.get(column);
+			double[] lineValues = getTF(bagOfWords,className);
+			
+			for(int line = 0; line < words.size(); line++) {
+				values[line][column] = lineValues[line];
+			}
+		}
+		
+		return values;
+		
+	}
+	
+	private double[] getTF(BagOfWords bagOfWords, String className) {
+		double totalTermsOfClass = getTotalTermsOfClass(bagOfWords, className);
+		List<String> classes = bagOfWords.getClasses();
+		int indexOfClass = classes.indexOf(className);
+		
+		double values[] = getColumnFromArray(bagOfWords.getValues(), indexOfClass);
+		
+		for(int index = 0; index < values.length; index++) {
+			values[index] = (double) (values[index] / totalTermsOfClass);
+		}
+		
+		return values;
 	}
 	
 	private double getTotalTermsOfClass(BagOfWords bagOfWords, String className) {
