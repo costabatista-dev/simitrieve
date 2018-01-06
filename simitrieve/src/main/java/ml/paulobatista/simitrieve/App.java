@@ -36,7 +36,7 @@ public class App {
 		process.setComment(Comment.NO);
 		process.setStem(Stem.YES);
 		process.setQuantile(Quantile.FIRST);
-		process.setNormalization(Normalization.LSI);
+		process.setNormalization(Normalization.TFIDF);
 		TokenManager tokenManager = new TokenManager();
 		
 		List<TokenList> allTokenLists = tokenManager.getAllTokenList(project, process);
