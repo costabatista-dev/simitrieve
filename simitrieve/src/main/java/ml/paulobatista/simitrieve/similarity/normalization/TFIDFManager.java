@@ -135,7 +135,7 @@ public class TFIDFManager {
 		return sum;
 	}
 
-	private double[] getColumnFromArray(double[][] array, int columnIndex) {
+	public double[] getColumnFromArray(double[][] array, int columnIndex) {
 		double[] values = new double[array.length];
 
 		for (int line = 0; line < array.length; line++) {
