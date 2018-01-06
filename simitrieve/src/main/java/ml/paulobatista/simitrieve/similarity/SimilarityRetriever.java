@@ -52,6 +52,10 @@ public class SimilarityRetriever {
 		double[] leftArray = getArrayQuantity(leftTokenList, wordList);
 		double[] rightArray = getArrayQuantity(rightTokenList, wordList);
 		
+		
+		leftArray = getNaiveNormalizedLeftArray(leftArray, rightArray);
+		rightArray = getNaiveNormalizedLeftArray(rightArray, leftArray);
+		
 		String firstClass = leftTokenList.getClassName();
 		String secondClass = rightTokenList.getClassName();
 		
@@ -68,6 +72,22 @@ public class SimilarityRetriever {
 		cosineSimilarity.setSecondPackage(secondPackage);
 		
 		return cosineSimilarity;
+	}
+	
+	
+	private double[] getNaiveNormalizedLeftArray(double[] leftArray, double[] rightArray) {
+		// error threat. if arrays have different size between them.
+		
+		int size = leftArray.length;
+		double[] normalizedLeft = new double[size];
+		double[] sum = new double[size];
+		
+		for(int index = 0; index < size; index++) {
+			sum[index] = leftArray[index] + rightArray[index];
+			normalizedLeft[index] = (double) (leftArray[index]/sum[index]);
+		}
+		
+		return normalizedLeft;
 	}
 	
 	private List<String> getWordList(TokenList leftTokenList, TokenList rightTokenList) {
