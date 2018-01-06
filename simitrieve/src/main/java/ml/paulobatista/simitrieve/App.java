@@ -2,6 +2,7 @@ package ml.paulobatista.simitrieve;
 
 import java.io.File;
 import java.util.List;
+import java.util.Map;
 
 import ml.paulobatista.simitrieve.csv.CSVManager;
 import ml.paulobatista.simitrieve.entity.BagOfWords;
@@ -89,6 +90,13 @@ public class App {
 			}
 		}
 		
+		
+		Map<String, String> map = bagOfWords.getPackages();
+		
+		for(String className : map.keySet()) {
+			System.out.println(map.get(className));
+			System.out.println(className);
+		}
 
 		//FeatureScanner fScanner = new FeatureScanner();
 		
