@@ -2,8 +2,10 @@ package ml.paulobatista.simitrieve;
 
 import java.io.File;
 import java.util.List;
+import java.util.Map;
 
 import ml.paulobatista.simitrieve.csv.CSVManager;
+import ml.paulobatista.simitrieve.entity.BagOfWords;
 import ml.paulobatista.simitrieve.entity.CosineSimilarity;
 import ml.paulobatista.simitrieve.entity.Project;
 import ml.paulobatista.simitrieve.entity.Token;
@@ -78,8 +80,23 @@ public class App {
 		csvManager.writeProjectSimilarityCSV(similarities, project, process);
 		
 		
-
+		BagOfWords bagOfWords = new BagOfWords(allTokenLists);
 		
+		double[][] values = bagOfWords.getValues();
+		
+		for(int line = 0; line < values.length; line++) {
+			for(int column = 0; column < values[line].length; column++) {
+				System.out.println(values[line][column]);
+			}
+		}
+		
+		
+		Map<String, String> map = bagOfWords.getPackages();
+		
+		for(String className : map.keySet()) {
+			System.out.println(map.get(className));
+			System.out.println(className);
+		}
 
 		//FeatureScanner fScanner = new FeatureScanner();
 		
