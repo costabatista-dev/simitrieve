@@ -62,12 +62,13 @@ public class CSVManager {
 		
 		String outputDirectoryName = project.getName() + "_stats" + File.separator + "similarities";
 		
-		String outputName = project.getName() + "_" + project.getVersion() + getCommentTag(process.getComment()) +
+		String outputName = project.getName() + "_" + "V" + project.getVersion() + "_" + getCommentTag(process.getComment()) +
 				getCamelCaseTag(process.getCamelCase()) + getStemTag(process.getStem()) + getQuantileTag(process.getQuantile()) +
 				getNormalizationTag(process.getNormalization()) + ".csv";
 		
 		String[] header = new String[] {"First Package","Second Package", "First Class", "Second Class", "Similarity"};
 		List<String[]> info = new ArrayList<>();
+		
 		for(CosineSimilarity similarity : similarities) {
 			String[] currentInfo = new String[] {similarity.getFirstPackage(), similarity.getSecondPackage(),
 					similarity.getFirstClass(), similarity.getSecondClass(), Double.toString(similarity.getSimilarity())};
