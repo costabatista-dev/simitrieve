@@ -22,14 +22,14 @@ import ml.paulobatista.simitrieve.scan.Scanner;
 
 public class ProjectFactory {
 
-	public Project getProject(String root, ProgrammingLanguage programmingLanguage) {
+	public Project getProject(String root, String projectNameValue, ProgrammingLanguage programmingLanguage) {
 		Scanner scan = new Scanner();
 		
 		List<File> files = scan.getFiles(root, programmingLanguage);
 		
 		List<Class> classes = getClassList(files);
 		
-		String projectName = getProjectName(root);
+		String projectName = projectNameValue;
 
 		List<Package> packages = getPackageList(classes, projectName);
 		
@@ -68,7 +68,9 @@ public class ProjectFactory {
 
 		return classes;
 	}
-
+	
+	@Deprecated
+	@SuppressWarnings("unused")
 	private String getProjectName(String root) {
 		String projectName = new String(root);
 		int begin = projectName.lastIndexOf(File.separator);

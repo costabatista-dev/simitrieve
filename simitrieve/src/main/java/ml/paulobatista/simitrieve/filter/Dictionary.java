@@ -64,8 +64,10 @@ public class Dictionary extends ArrayList<String> {
 
 		try {
 			File file = new File(System.getProperty("user.dir") + File.separator + "dic" + File.separator + dictionary);
+
 			FileReader reader = new FileReader(file);
 			BufferedReader buffer = new BufferedReader(reader);
+			
 			List<String> words = new ArrayList<>();
 			String line = null;
 
