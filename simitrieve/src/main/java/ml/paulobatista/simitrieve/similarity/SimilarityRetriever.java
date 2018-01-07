@@ -31,7 +31,9 @@ public class SimilarityRetriever {
 		} else if (normalization.equals(Normalization.LSI)) {
 			return getCosineSimilarityLSINormalization(allTokenLists);
 		} else {
-			// error threat.
+			System.out.println("In SimilarityRetriver.java: getCosineSimilarities");
+			System.out.println("Unexpected normalization type");
+			System.exit(-1);
 		}
 		return null;
 	}
@@ -157,7 +159,12 @@ public class SimilarityRetriever {
 	}
 
 	private double[] getNaiveNormalizedLeftArray(double[] leftArray, double[] rightArray) {
-		// error threat. if arrays have different size between them.
+
+		if (leftArray.length != rightArray.length) {
+			System.out.println("In SimilarityRetriever.java : getNaiveNormalizedLeftArray");
+			System.out.println("Unexpected different arrays sizes");
+			System.exit(-1);
+		}
 
 		int size = leftArray.length;
 		double[] normalizedLeft = new double[size];
@@ -217,7 +224,10 @@ public class SimilarityRetriever {
 		double normalizedLefArray = 0.0, normalizedRightArray = 0.0;
 
 		if (leftArray.length != rightArray.length) {
-			// error threat.
+			System.out.println("In SimilarityRetriever.java : getCosineSimilarity");
+
+			System.out.println("Unexpected different arrays sizes");
+			System.exit(-1);
 		}
 
 		int size = leftArray.length;

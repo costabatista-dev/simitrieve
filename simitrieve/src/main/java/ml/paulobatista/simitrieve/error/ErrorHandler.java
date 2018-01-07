@@ -61,5 +61,10 @@ public class ErrorHandler {
 		System.exit(Error.DICTIONARY_READING_ERROR.getCode());
 	}
 	
+	public static void errorInCMD(String parameter) {
+		System.out.println("Error in command line parameter - Parameter: " + parameter);
+		System.exit(Error.COMMAND_LINE_PARAMETER_ERROR.getCode());
+	}
+	
 	
 }

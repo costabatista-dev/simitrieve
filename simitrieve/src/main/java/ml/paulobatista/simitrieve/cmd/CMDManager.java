@@ -9,6 +9,7 @@ import ml.paulobatista.simitrieve.entity.process.Normalization;
 import ml.paulobatista.simitrieve.entity.process.ProgrammingLanguage;
 import ml.paulobatista.simitrieve.entity.process.Quantile;
 import ml.paulobatista.simitrieve.entity.process.Stem;
+import ml.paulobatista.simitrieve.error.ErrorHandler;
 import ml.paulobatista.simitrieve.process.Process;
 
 /**
@@ -26,9 +27,8 @@ public class CMDManager {
 	private String quantile;
 	private String normalization;
 
-	
-	public CMDManager(String [] args) {
-		if(args[0].equals("similarity")) {
+	public CMDManager(String[] args) {
+		if (args[0].equals("similarity")) {
 			this.projectPath = args[1];
 			this.projectName = args[2];
 			this.projectVersion = args[3];
@@ -38,15 +38,14 @@ public class CMDManager {
 			this.stemming = args[7];
 			this.quantile = args[8];
 			this.normalization = args[9];
-		}
-		else if(args[0].equals("feature")) {
+		} else if (args[0].equals("feature")) {
 			this.projectPath = args[1];
 			this.projectName = args[2];
 			this.projectVersion = args[3];
 			this.programmingLanguage = args[4];
 		}
 	}
-	
+
 	public Process getProcess() {
 		Process process = new Process();
 		process.setComment(getProcessComments());
@@ -55,104 +54,87 @@ public class CMDManager {
 		process.setQuantile(getProcessQuantile());
 		process.setNormalization(getProcessNormalization());
 		process.setProgrammingLanguage(getProcessProgrammingLanguage());
-		
+
 		return process;
 	}
 
 	private ProgrammingLanguage getProcessProgrammingLanguage() {
-		if(this.programmingLanguage.equals("java")) {
+		if (this.programmingLanguage.equals("java")) {
 			return ProgrammingLanguage.JAVA;
-		}
-		else if(this.programmingLanguage.equals("javascript")) {
+		} else if (this.programmingLanguage.equals("javascript")) {
 			return ProgrammingLanguage.JAVASCRIPT;
-		}
-		else if(this.programmingLanguage.equals("python")) {
+		} else if (this.programmingLanguage.equals("python")) {
 			return ProgrammingLanguage.PYTHON;
-		}
-		else if(this.programmingLanguage.equals("ruby")) {
+		} else if (this.programmingLanguage.equals("ruby")) {
 			return ProgrammingLanguage.RUBY;
-		}
-		else if(this.programmingLanguage.equals("cpp")) {
+		} else if (this.programmingLanguage.equals("cpp")) {
 			return ProgrammingLanguage.CPP;
-		}
-		else {
-			//error threatment.
+		} else {
+			ErrorHandler.errorInCMD("Programming Language");
 			return null;
 		}
 	}
+
 	private Comment getProcessComments() {
 		if (this.comments.equals("yco")) {
 			return Comment.YES;
-		}
-		else if(this.comments.equals("nco")) {
+		} else if (this.comments.equals("nco")) {
 			return Comment.NO;
-		}
-		else  {
-			//error threat.
+		} else {
+			ErrorHandler.errorInCMD("Comments usage");
 			return null;
 		}
 	}
 
 	private CamelCase getProcessCamelCase() {
-		if(this.camelCase.equals("yca")) {
+		if (this.camelCase.equals("yca")) {
 			return CamelCase.YES;
-		}
-		else if(this.camelCase.equals("nca")) {
+		} else if (this.camelCase.equals("nca")) {
 			return CamelCase.NO;
-		}
-		else {
-			//error threat.
+		} else {
+			ErrorHandler.errorInCMD("Camel case usage");
 			return null;
 		}
 	}
-	
+
 	private Quantile getProcessQuantile() {
-		if(this.quantile.equals("qfi")) {
+		if (this.quantile.equals("qfi")) {
 			return Quantile.FIRST;
-		}
-		else if(this.quantile.equals("qse")) {
+		} else if (this.quantile.equals("qse")) {
 			return Quantile.SECOND;
-		}
-		else if(this.quantile.equals("qth")) {
+		} else if (this.quantile.equals("qth")) {
 			return Quantile.THIRD;
-		}
-		else if(this.quantile.equals("qfo")) {
+		} else if (this.quantile.equals("qfo")) {
 			return Quantile.FOURTH;
-		}
-		else {
-			// error threat
+		} else {
+			ErrorHandler.errorInCMD("Quantile is invalid");
 			return null;
 		}
 	}
-	
+
 	private Normalization getProcessNormalization() {
-		if(this.normalization.equals("naive")) {
+		if (this.normalization.equals("naive")) {
 			return Normalization.NAIVE;
-		}
-		else if(this.normalization.equals("lsi")) {
+		} else if (this.normalization.equals("lsi")) {
 			return Normalization.LSI;
-		}
-		else if(this.normalization.equals("tfidf")) {
+		} else if (this.normalization.equals("tfidf")) {
 			return Normalization.TFIDF;
-		}
-		else {
-			//error threat.
+		} else {
+			ErrorHandler.errorInCMD("Normalization is invalid");
 			return null;
 		}
 	}
-	
+
 	private Stem getProcessStemming() {
-		if(this.stemming.equals("ys")) {
+		if (this.stemming.equals("ys")) {
 			return Stem.YES;
-		}
-		else if(this.stemming.equals("ns")) {
+		} else if (this.stemming.equals("ns")) {
 			return Stem.NO;
-		}
-		else {
-			//error threat.
+		} else {
+			ErrorHandler.errorInCMD("Stemming option is invalid");
 			return null;
 		}
-		
+
 	}
 
 	public String getProgrammingLanguage() {
@@ -176,7 +158,7 @@ public class CMDManager {
 	}
 
 	public void setProjectVersion(String projectVersion) {
-		// error threat.
+
 		this.projectVersion = projectVersion;
 	}
 
@@ -185,17 +167,17 @@ public class CMDManager {
 	}
 
 	public void setComments(String comments) {
-		// error threat.
+
 		this.comments = comments;
 	}
 
 	public String getCamelCase() {
-		// error threat.
+
 		return camelCase;
 	}
 
 	public void setCamelCase(String camelCase) {
-		// error threat.
+
 		this.camelCase = camelCase;
 	}
 
@@ -204,7 +186,7 @@ public class CMDManager {
 	}
 
 	public void setStemming(String stemming) {
-		// error threat.
+
 		this.stemming = stemming;
 	}
 
@@ -213,7 +195,7 @@ public class CMDManager {
 	}
 
 	public void setQuantile(String quantile) {
-		// error threat.
+
 		this.quantile = quantile;
 	}
 
@@ -222,10 +204,9 @@ public class CMDManager {
 	}
 
 	public void setNormalization(String normalization) {
-		// error threat.
 		this.normalization = normalization;
 	}
-	
+
 	public String getProjectName() {
 		return projectName;
 	}
