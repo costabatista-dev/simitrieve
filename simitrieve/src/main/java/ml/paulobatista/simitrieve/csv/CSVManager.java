@@ -49,7 +49,7 @@ public class CSVManager {
 		info.add(new String[] { "NOC", Integer.toString(numberOfClasses) });
 		info.add(new String[] { "LOC", Integer.toString(numberOfLinesOfCode) });
 
-		String outputDirectoryName = fScanner.getProjectName(project) + "_stats" + File.separator + version + File.separator + "features";
+		String outputDirectoryName = fScanner.getProjectName(project) + "_stats" + File.separator +  "V" + version + File.separator + "features";
 
 		createOutputDiretctory(outputDirectoryName);
 
@@ -60,7 +60,7 @@ public class CSVManager {
 
 	public void writeProjectSimilarityCSV(List<CosineSimilarity> similarities, Project project, Process process) {
 		
-		String outputDirectoryName = project.getName() + "_stats" + File.separator + project.getVersion() + File.separator + "similarities";
+		String outputDirectoryName = project.getName() + "_stats" + File.separator + "V" + project.getVersion() + File.separator + "similarities";
 		
 		String outputName = project.getName() + "_" + "V" + project.getVersion() + "_" + getCommentTag(process.getComment()) +
 				getCamelCaseTag(process.getCamelCase()) + getStemTag(process.getStem()) + getQuantileTag(process.getQuantile()) +
