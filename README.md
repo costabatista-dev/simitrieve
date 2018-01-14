@@ -1,2 +1,2 @@
-# undergratuated-thesis
-This is a repository to develop my undergraduated thesis 
+# Simitrieve
+This is a repository to develop a programm to my undergraduated thesis 
