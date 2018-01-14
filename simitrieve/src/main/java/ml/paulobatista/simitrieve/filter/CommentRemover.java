@@ -51,45 +51,48 @@ public class CommentRemover {
 		String patternComment_2 = ".*\"\"\".*";
 		String inLineComment_2 = ".*'''.*'''.*";
 		String inLineComment_3 = ".*\"\"\".*\"\"\".*";
+		try {
+			for (int index = 0; index < sizeOfCode; index++) {
+				codeLine = sourceCode.get(index);
 
-		for (int index = 0; index < sizeOfCode; index++) {
-			codeLine = sourceCode.get(index);
+				if (codeLine.matches(inLineComment_1)) {
+					codeLine = codeLine.replaceAll("#.*", "");
+					filtered.add(codeLine);
+				} else if (codeLine.matches(inLineComment_2)) {
+					codeLine = codeLine.replaceAll("'''.*'''", "");
+					filtered.add(codeLine);
+				} else if (codeLine.matches(inLineComment_3)) {
+					codeLine = codeLine.replaceAll("\"\"\".*\"\"\"", "");
+					filtered.add(codeLine);
+				} else if (codeLine.matches(patternComment_1)) {
+					codeLine = codeLine.replaceAll("'''.*", "");
+					filtered.add(codeLine);
 
-			if (codeLine.matches(inLineComment_1)) {
-				codeLine = codeLine.replaceAll("#.*", "");
-				filtered.add(codeLine);
-			} else if (codeLine.matches(inLineComment_2)) {
-				codeLine = codeLine.replaceAll("'''.*'''", "");
-				filtered.add(codeLine);
-			} else if (codeLine.matches(inLineComment_3)) {
-				codeLine = codeLine.replaceAll("\"\"\".*\"\"\"", "");
-				filtered.add(codeLine);
-			} else if (codeLine.matches(patternComment_1)) {
-				codeLine = codeLine.replaceAll("'''.*", "");
-				filtered.add(codeLine);
+					while (!codeLine.matches(patternComment_1) && index < sizeOfCode) {
+						codeLine = sourceCode.get(index);
+						index++;
+					}
 
-				while (!codeLine.matches(patternComment_1)) {
-					index++;
-					codeLine = sourceCode.get(index);
+					codeLine = codeLine.replaceAll(".*'''", "");
+					filtered.add(codeLine);
+				} else if (codeLine.matches(patternComment_2)) {
+					codeLine = codeLine.replaceAll("\"\"\".*", "");
+					filtered.add(codeLine);
+
+					while (!codeLine.matches(patternComment_2) && index < sizeOfCode) {
+						codeLine = sourceCode.get(index);
+						index++;
+					}
+
+					codeLine = codeLine.replaceAll(".*\"\"\"", "");
+
+					filtered.add(codeLine);
+				} else {
+					filtered.add(codeLine);
 				}
-
-				codeLine = codeLine.replaceAll(".*'''", "");
-				filtered.add(codeLine);
-			} else if (codeLine.matches(patternComment_2)) {
-				codeLine = codeLine.replaceAll("\"\"\".*", "");
-				filtered.add(codeLine);
-
-				while (!codeLine.matches(patternComment_2)) {
-					index++;
-					codeLine = sourceCode.get(index);
-				}
-
-				codeLine = codeLine.replaceAll(".*\"\"\"", "");
-
-				filtered.add(codeLine);
-			} else {
-				filtered.add(codeLine);
 			}
+		} catch (Exception e) {
+			e.getMessage();
 		}
 
 		return filtered;
@@ -141,38 +144,51 @@ public class CommentRemover {
 
 	private List<String> removeCommentJavaCppJavascriptPattern(List<String> sourceCode) {
 		List<String> filtered = null;
+		filtered = new ArrayList<>();
 		try {
-			filtered = new ArrayList<>();
+
 			for (int i = 0; i < sourceCode.size(); i++) {
 				String line = sourceCode.get(i);
 				if (line.matches(".*//.*")) {
-					line = line.split("//")[0];
+					if (line.split("//") != null) {
+						line = line.split("//")[0];
+					}
+
 				} else if (line.matches(".+/\\*.*\\*/.+")) {
-					line = line.split("/\\*.*\\*/")[0] + " " + line.split("/\\*.*\\*/")[1];
+					if (line.split("/\\*.*\\*/")[0] != null && line.split("/\\*.*\\*/")[1] != null) {
+						line = line.split("/\\*.*\\*/")[0] + " " + line.split("/\\*.*\\*/")[1];
+					}
+
 				} else if (line.matches("\\s*/\\*.*\\*/\\s*")) {
 					line = "";
 				} else if (line.matches(".+/\\*.*\\*/\\s*")) {
-					line = line.split("/\\*.*\\*/\\s*")[0];
-				} else if (line.matches(".*/\\*.*")) {
-					while (!line.matches(".*\\*/.*")) {
-						i++;
-						line = sourceCode.get(i);
+					if (line.split("/\\*.*\\*/\\s*")[0] != null) {
+						line = line.split("/\\*.*\\*/\\s*")[0];
 					}
-					if (line.matches(".*\\*/")) {
-						line = "";
-					} else if (line.matches(".*\\*/.+")) {
-						line = line.split(".*\\*/")[0];
+
+				} else if (line.matches(".*/\\*.*")) {
+					while (!line.matches(".*\\*/.*") && i < sourceCode.size()) {
+						line = sourceCode.get(i);
+						i++;
+					}
+					if (line.matches(".*\\*/.+")) {
+						if (line.split(".*\\*/")[1] != null) {
+							line = line.split(".*\\*/")[1];
+						}
 					}
 				}
 				filtered.add(line);
 			}
 		} catch (Exception e) {
-			System.out.println("In CommmentRemover:");
-			System.out.println(e.getMessage());
+			// System.out.println("In CommmentRemover:");
+			// System.out.println(e.getCause());
+			e.getStackTrace();
 			// error threat
 		}
 
-		// whether filtered equals null appoint an error.
+		// if (filtered == null || filtered.isEmpty()) {
+		// ErrorHandler.removeCommentsError();
+		// }
 		return filtered;
 	}
 }

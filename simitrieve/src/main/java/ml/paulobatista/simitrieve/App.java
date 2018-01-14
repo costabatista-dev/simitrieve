@@ -22,7 +22,7 @@ public class App {
 	public static void main(String[] args) {
 		
 		CMDManager cmdManager = new CMDManager(args);
-		Process process = cmdManager.getProcess();
+		Process process = cmdManager.getProcess(args[0]);
 		Project project = new ProjectFactory().getProject(cmdManager.getProjectPath(), cmdManager.getProjectName(),
 				process.getProgrammingLanguage());
 		project.setVersion(cmdManager.getProjectVersion());

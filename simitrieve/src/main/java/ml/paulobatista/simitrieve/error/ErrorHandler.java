@@ -66,5 +66,10 @@ public class ErrorHandler {
 		System.exit(Error.COMMAND_LINE_PARAMETER_ERROR.getCode());
 	}
 	
+	public static void removeCommentsError() {
+		System.out.println("Unexpected error: Error while is removing comment from source code" );
+		System.exit(Error.REMOVE_COMMENTS_ERROR.getCode());
+	}
+	
 	
 }
