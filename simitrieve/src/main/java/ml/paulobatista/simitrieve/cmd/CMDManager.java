@@ -46,14 +46,22 @@ public class CMDManager {
 		}
 	}
 
-	public Process getProcess() {
+	public Process getProcess(String typeOfProcess) {
 		Process process = new Process();
-		process.setComment(getProcessComments());
-		process.setCamelCase(getProcessCamelCase());
-		process.setStem(getProcessStemming());
-		process.setQuantile(getProcessQuantile());
-		process.setNormalization(getProcessNormalization());
-		process.setProgrammingLanguage(getProcessProgrammingLanguage());
+		if (typeOfProcess.equals("feature")) {
+			process.setProgrammingLanguage(getProcessProgrammingLanguage());
+		} else if (typeOfProcess.equals("similarity")) {
+			process.setComment(getProcessComments());
+			process.setCamelCase(getProcessCamelCase());
+			process.setStem(getProcessStemming());
+			process.setQuantile(getProcessQuantile());
+			process.setNormalization(getProcessNormalization());
+			process.setProgrammingLanguage(getProcessProgrammingLanguage());
+		}
+		else {
+			System.out.println("This operation cannot be recognized");
+			System.exit(-1);
+		}
 
 		return process;
 	}
