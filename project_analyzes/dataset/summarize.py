@@ -36,7 +36,7 @@ def getCSVSimilarityProcessName(csvName, projectName, version):
     return finalName
 
 
-def mergeCSVSimilarities(csvsSimilarities=[]):
+def mergeCSVSimilarities(projectName, version, csvsSimilarities=[]):
     headers=["First Package", "Second Package", "First Class", "Second Class"]
     dataframe=pd.DataFrame(csvsSimilarities[0][headers])
     for csv in csvsSimilarities:
@@ -45,7 +45,7 @@ def mergeCSVSimilarities(csvsSimilarities=[]):
        dataframe=pd.concat([dataframe, currentFrame], axis=1)
 
     dataframe.columns=headers  
-    dataframe.to_csv("summarized.csv", index=False)
+    dataframe.to_csv(projectName + "_"+ version + "_" + "similarities.csv", index=False)
 
 
 '''Bellow: python script summarize execution'''
@@ -53,9 +53,9 @@ def mergeCSVSimilarities(csvsSimilarities=[]):
 setPath(sys.argv[1])
 csvList=getCSVList()
 projectName=sys.argv[2]
-version=sys.argv[3]
+projectVersion=sys.argv[3]
 
-csvsSimilarities=getAllSimilarityCSVS(csvList, projectName, version)
+csvsSimilarities=getAllSimilarityCSVS(csvList, projectName, projectVersion)
 
 headers=["First Package", "Second Package", "First Class", "Second Class"]
-mergeCSVSimilarities(csvsSimilarities)
+mergeCSVSimilarities(projectName, projectVersion, csvsSimilarities)
