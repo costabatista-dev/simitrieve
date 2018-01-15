@@ -27,15 +27,22 @@ def getVersions(csv):
 def selectMeans(csv, model):
    return list(csv.loc[(csv["model"] == model)]["mean"])   
 
+
 path=sys.argv[1]
 setPath(path)
 projectName=sys.argv[3]
 
 csvName=sys.argv[2]
 metricCSV=getMetricCSV(csvName)
-models=getModels(metricCSV)
-x_array=getVersions(metricCSV)
 
+if len(sys.argv) <= 4:
+    x_array=getVersions(metricCSV)
+else:
+    x_array=[]
+    for i in range(4, len(sys.argv)):
+        x_array.append(sys.argv[i])
+
+models=getModels(metricCSV)
 data=[]
 
 for model in models:
