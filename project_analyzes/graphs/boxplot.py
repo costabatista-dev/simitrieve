@@ -86,4 +86,4 @@ layout=go.Layout(
 )
 
 fig=go.Figure(data=data, layout=layout)
-plot_url=py.plot(fig, filename=projectName)
+plot_url=py.plot(fig, filename=projectName, auto_open=False)
