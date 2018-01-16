@@ -243,7 +243,7 @@ public class SimilarityRetriever {
 
 		double cosine = (product / divisor);
 
-		return cosine;
+		return corretion(cosine);
 	}
 
 	@SuppressWarnings("unused")
@@ -251,5 +251,18 @@ public class SimilarityRetriever {
 		double truncated = Math.round(value * 100) / 100d;
 
 		return truncated;
+	}
+	
+	private double corretion(double value) {
+		if(Double.isNaN(value)) {
+			return 0.0;
+		}
+		else if(value > 1.0) {
+			return 1.0;
+		}
+		else {
+			return value;
+		}
+		
 	}
 }
