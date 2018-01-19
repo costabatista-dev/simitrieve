@@ -39,7 +39,7 @@ public class LSIManager {
 		
 		Matrix reducedSigma = sigma.getMatrix(0, k - 1, 0, k - 1);
 		
-		Matrix reducedDocumentVector = documentVector.getMatrix(0, documentVector.getColumnDimension() - 1, 0, k - 1);
+		Matrix reducedDocumentVector = documentVector.getMatrix(0, documentVector.getRowDimension() - 1, 0, k - 1);
 		
 		Matrix weights = reducedWordVector.times(reducedSigma).times(reducedDocumentVector.transpose());
 		

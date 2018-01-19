@@ -137,8 +137,8 @@ public class SimilarityRetriever {
 		double[] leftArray = getArrayQuantity(leftTokenList, wordList);
 		double[] rightArray = getArrayQuantity(rightTokenList, wordList);
 
-		leftArray = getNaiveNormalizedLeftArray(leftArray, rightArray);
-		rightArray = getNaiveNormalizedLeftArray(rightArray, leftArray);
+		//leftArray = getNaiveNormalizedLeftArray(leftArray, rightArray);
+		//rightArray = getNaiveNormalizedLeftArray(rightArray, leftArray);
 
 		String firstClass = leftTokenList.getClassName();
 		String secondClass = rightTokenList.getClassName();
@@ -158,6 +158,7 @@ public class SimilarityRetriever {
 		return cosineSimilarity;
 	}
 
+	@SuppressWarnings("unused")
 	private double[] getNaiveNormalizedLeftArray(double[] leftArray, double[] rightArray) {
 
 		if (leftArray.length != rightArray.length) {
@@ -243,10 +244,9 @@ public class SimilarityRetriever {
 
 		double cosine = (product / divisor);
 
-		return corretion(cosine);
+		return truncate(corretion(cosine));
 	}
 
-	@SuppressWarnings("unused")
 	private double truncate(double value) {
 		double truncated = Math.round(value * 100) / 100d;
 
@@ -254,7 +254,7 @@ public class SimilarityRetriever {
 	}
 	
 	private double corretion(double value) {
-		if(Double.isNaN(value)) {
+		if(Double.isNaN(value) || value < 0) {
 			return 0.0;
 		}
 		else if(value > 1.0) {
