@@ -219,7 +219,7 @@ public class SimilarityRetriever {
 		return arrayQuantity;
 	}
 
-	public double getCosineSimilarity(double[] leftArray, double[] rightArray) {
+		public double getCosineSimilarity(double[] leftArray, double[] rightArray) {
 		double product = 0.0;
 
 		double normalizedLefArray = 0.0, normalizedRightArray = 0.0;
@@ -248,7 +248,7 @@ public class SimilarityRetriever {
 	}
 
 	private double truncate(double value) {
-		double truncated = Math.round(value * 100) / 100d;
+		double truncated = Math.round(value * 1000000) / 1000000d;
 
 		return truncated;
 	}
