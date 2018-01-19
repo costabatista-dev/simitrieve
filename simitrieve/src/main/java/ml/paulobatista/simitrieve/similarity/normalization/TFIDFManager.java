@@ -68,8 +68,8 @@ public class TFIDFManager {
 		Map<String, Double> idfValues = new HashMap<>();
 
 		for (String word : words) {
-			int documentWordRate = getWordRateDocument(allTokenLists, word);
-			double idf = (double) Math.log((double) numberOfDocuments / (double) documentWordRate);
+			int documentRate = getRateDocument(allTokenLists, word);
+			double idf = (double) Math.log10((double) numberOfDocuments / (double) documentRate);
 			Double idfValue = new Double(idf);
 
 			idfValues.put(word, idfValue);
@@ -79,13 +79,13 @@ public class TFIDFManager {
 
 	}
 
-	private int getWordRateDocument(List<TokenList> allTokenLists, String word) {
+	private int getRateDocument(List<TokenList> allTokenLists, String word) {
 		int documentRate = 0;
 
 		for (TokenList tokenList : allTokenLists) {
 			if (tokenList.contains(word)) {
 			
-				documentRate += tokenList.getQuantity(word);
+				documentRate ++;
 			}
 		}
 
