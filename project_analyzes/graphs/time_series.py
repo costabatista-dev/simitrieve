@@ -21,11 +21,13 @@ def getModels(csv):
 
 def getVersions(csv):
     versions=csv["version"].unique()
-    return list(versions)
+    versions=list(versions)
+    return versions
 
 
 def selectMeans(csv, model):
-   return list(csv.loc[(csv["model"] == model)]["mean"])   
+    return list(csv.loc[(csv["model"] == model)]["mean"])   
+    
 
 
 path=sys.argv[1]

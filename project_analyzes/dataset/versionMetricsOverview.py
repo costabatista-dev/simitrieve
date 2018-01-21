@@ -73,7 +73,7 @@ def getTuples(csv):
 
 def writeTuplesCSV(projectName, tuples=[]):
      headers=["version", "highest mean model", "highest mean value", "highest median model", "highest median value", 
-     "lowes mean model", "lowest mean value", "lowest median model", "lowest median value"]
+     "lowest mean model", "lowest mean value", "lowest median model", "lowest median value"]
      dataframe = pd.DataFrame(tuples, columns=headers)
      dataframe.to_csv(projectName + "_obv.csv", index=False)
 
