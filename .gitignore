@@ -6,6 +6,7 @@ __pycache__/
 # C extensions
 *.so
 agera/
+capistrano/
 # Distribution / packaging
 .Python
 env/

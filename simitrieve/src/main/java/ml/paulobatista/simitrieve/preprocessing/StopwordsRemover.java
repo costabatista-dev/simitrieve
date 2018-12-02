@@ -1,7 +1,7 @@
 /**
  * 
  */
-package ml.paulobatista.simitrieve;
+package ml.paulobatista.simitrieve.preprocessing;
 
 import java.io.File;
 import java.io.IOException;

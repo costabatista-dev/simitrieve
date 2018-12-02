@@ -3,6 +3,10 @@
  */
 package ml.paulobatista.simitrieve;
 
+import ml.paulobatista.simitrieve.entity.ProgrammingFile;
+import ml.paulobatista.simitrieve.entity.Project;
+import ml.paulobatista.simitrieve.preprocessing.CommentRemover;
+
 /**
  * @author paulo
  *

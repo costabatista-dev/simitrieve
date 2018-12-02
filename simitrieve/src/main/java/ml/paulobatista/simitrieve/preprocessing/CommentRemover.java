@@ -1,7 +1,11 @@
 /**
  * 
  */
-package ml.paulobatista.simitrieve;
+package ml.paulobatista.simitrieve.preprocessing;
+
+import ml.paulobatista.simitrieve.entity.Language;
+import ml.paulobatista.simitrieve.entity.ProgrammingFile;
+import ml.paulobatista.simitrieve.entity.Project;
 
 /**
  * @author paulo

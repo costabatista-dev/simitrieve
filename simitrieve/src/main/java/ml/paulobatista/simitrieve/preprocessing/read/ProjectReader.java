@@ -1,7 +1,7 @@
 /**
  * 
  */
-package ml.paulobatista.simitrieve;
+package ml.paulobatista.simitrieve.preprocessing.read;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,6 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import ml.paulobatista.simitrieve.entity.ProgrammingFile;
+import ml.paulobatista.simitrieve.entity.Project;
 
 /**
  * @author paulo

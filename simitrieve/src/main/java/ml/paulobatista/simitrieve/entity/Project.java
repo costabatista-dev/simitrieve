@@ -1,9 +1,11 @@
 /**
  * 
  */
-package ml.paulobatista.simitrieve;
+package ml.paulobatista.simitrieve.entity;
 
 import java.util.ArrayList;
+
+import ml.paulobatista.simitrieve.preprocessing.read.ProjectReader;
 
 /**
  * @author paulo
