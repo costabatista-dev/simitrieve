@@ -16,7 +16,7 @@ public class App {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		List<String> paths = new ProjectReader().getProjectStructure("agera");
+		List<String> paths = new ProjectReader().getProgrammingFilePaths("react",new String[] {"js"});
 		
 		for(String s : paths) {
 			System.out.println(s);

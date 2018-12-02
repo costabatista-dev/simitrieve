@@ -20,19 +20,36 @@ public class ProjectReader {
 
 	public List<String> getProjectStructure(String root) {
 		List<Path> list = null;
-		try(Stream<Path> paths = Files.walk(Paths.get(root))) {
+		try (Stream<Path> paths = Files.walk(Paths.get(root))) {
 			list = paths.collect(Collectors.toList());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		List<String> listOfPaths = new ArrayList<>();
-		
-		for(Path p : list) {
+
+		for (Path p : list) {
 			listOfPaths.add(p.toString());
 		}
-		
+
 		return listOfPaths;
+	}
+
+	public List<String> getProgrammingFilePaths(String root, String[] ext) {
+		List<String> filePaths = this.getProjectStructure(root);
+		List<String> programmingFilePaths = new ArrayList<>();
+
+		for (String p : filePaths) {
+			for (String e : ext) {
+				e = (e.charAt(0) == '.') ? e : ('.' + e);
+				if (p.endsWith(e)) {
+
+					programmingFilePaths.add(p);
+				}
+			}
+		}
+
+		return programmingFilePaths;
 	}
 }
