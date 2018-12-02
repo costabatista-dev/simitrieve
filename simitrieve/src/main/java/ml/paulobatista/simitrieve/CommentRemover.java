@@ -101,5 +101,35 @@ public class CommentRemover {
 		return withoutComments.toString();
 
 	}
-
+	
+	public String removeRbComments(String sourceCode) {
+		StringBuilder withoutComments = new StringBuilder();
+		boolean continueCondition = true;
+		
+		for(int i = 0; i < sourceCode.length(); i++) {
+			if(sourceCode.charAt(i) == '#') {
+				i++;
+				while(sourceCode.charAt(i) != '\n') {
+					i++;
+				}
+				i++;
+			}
+			
+			if(sourceCode.substring(i).startsWith("=begin")) {
+				i += 6;
+				while(continueCondition) {
+					if(sourceCode.substring(i).startsWith("=end")) {
+						continueCondition = false;
+						i += 4;
+					}
+					i++;
+ 				}
+			}
+			
+			continueCondition = true;
+			withoutComments.append(sourceCode.charAt(i));
+		}
+		
+		return withoutComments.toString();
+	}
 }
