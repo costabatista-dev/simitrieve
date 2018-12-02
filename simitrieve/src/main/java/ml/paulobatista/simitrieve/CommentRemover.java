@@ -132,4 +132,38 @@ public class CommentRemover {
 		
 		return withoutComments.toString();
 	}
+
+	public ProgrammingFile removeCommentFromFile(ProgrammingFile pfile, Language lng) {
+		String sourceCode = pfile.getSourceCode();
+		if(lng.equals(Language.CPP)) {
+			sourceCode = this.removeCppComment(sourceCode);
+		}
+		else if(lng.equals(Language.JAVA)) {
+			sourceCode = this.removeJavaComment(sourceCode);
+		}
+		else if(lng.equals(Language.JAVASCRIPT)) {
+			sourceCode = this.removeJsComments(sourceCode);
+		}
+		else if(lng.equals(Language.PYTHON)) {
+			sourceCode = this.removePyComments(sourceCode);
+		}
+		else if(lng.equals(Language.RUBY)) {
+			sourceCode = this.removeRbComments(sourceCode);
+		}
+		else {
+			throw new UnsupportedOperationException("Language not supported.");
+		}
+		
+		pfile.setSourceCode(sourceCode);
+		return pfile;
+	}
+	
+	public Project removeComments(Project project) {
+		Language language = project.getLanguage();
+		for(ProgrammingFile pf : project) {
+			this.removeCommentFromFile(pf, language);
+		}
+		
+		return project;
+	}
 }
