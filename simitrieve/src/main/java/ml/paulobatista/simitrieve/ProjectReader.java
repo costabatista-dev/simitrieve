@@ -62,7 +62,7 @@ public class ProjectReader {
 			content = new String(fileContent);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e.getMessage();
 		}
 		return content;
 
