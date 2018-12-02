@@ -9,30 +9,30 @@ package ml.paulobatista.simitrieve;
  */
 public class ProgrammingFile {
 	private String path;
-	private String content;
+	private String sourceCode;
 	
 	public ProgrammingFile() {
 		
 	}
 	
-	public ProgrammingFile(String path, String content) {
+	public ProgrammingFile(String path, String sourceCode) {
 		this.path = path;
-		this.content = content;
+		this.sourceCode = sourceCode;
 	}
 	
 	public void setPath(String path) {
 		this.path = path;
 	}
 	
-	public void setContent(String content) {
-		this.content = content;
+	public void setSourceCode(String sourceCode) {
+		this.sourceCode = sourceCode;
 	}
 	
 	public String getPath() {
 		return this.path;
 	}
 	
-	public String getContent() {
-		return this.content;
+	public String getSourceCode() {
+		return this.sourceCode;
 	}
 }

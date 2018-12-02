@@ -70,8 +70,8 @@ public class ProjectReader {
 	
 	
 	public ProgrammingFile getProgrammingFile(String path) {
-		String content = this.getContentFile(path);
-		ProgrammingFile pFile = new ProgrammingFile(path, content);
+		String sourceCode = this.getContentFile(path);
+		ProgrammingFile pFile = new ProgrammingFile(path, sourceCode);
 		
 		return pFile;
 	}
