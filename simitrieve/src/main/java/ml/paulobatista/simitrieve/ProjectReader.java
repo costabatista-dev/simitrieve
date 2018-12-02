@@ -3,6 +3,7 @@
  */
 package ml.paulobatista.simitrieve;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -51,5 +52,39 @@ public class ProjectReader {
 		}
 
 		return programmingFilePaths;
+	}
+
+	private String getContentFile(String path) {
+		File f = new File(path);
+		String content = null;
+		try {
+			byte[] fileContent = Files.readAllBytes(f.toPath());
+			content = new String(fileContent);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return content;
+
+	}
+	
+	
+	public ProgrammingFile getProgrammingFile(String path) {
+		String content = this.getContentFile(path);
+		ProgrammingFile pFile = new ProgrammingFile(path, content);
+		
+		return pFile;
+	}
+	
+	public Project getProject(String root, String[] ext) {
+		List<String> paths = this.getProgrammingFilePaths(root, ext);
+		Project proj = new Project();
+		
+		for(String p : paths) {
+			ProgrammingFile pFile = this.getProgrammingFile(p);
+			proj.add(pFile);
+		}
+		
+		return proj;
 	}
 }
