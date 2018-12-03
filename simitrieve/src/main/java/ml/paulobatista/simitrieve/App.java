@@ -24,6 +24,7 @@ public class App {
 		cr.removeComments(project);
 		Preprocessor pcp = new Preprocessor();
 		pcp.removeSpecialCharacters(project);
+		pcp.removeStopwords(project);
 		
 		for(ProgrammingFile pf : project) {
 			System.out.println(pf.getSourceCode());

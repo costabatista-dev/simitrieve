@@ -8,6 +8,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
 
+import ml.paulobatista.simitrieve.entity.Language;
+import ml.paulobatista.simitrieve.entity.ProgrammingFile;
+import ml.paulobatista.simitrieve.entity.Project;
+
 /**
  * @author paulo
  *
@@ -75,9 +79,22 @@ public class StopwordsRemover {
 		return content;
 	}
 
-	public List<String> loadDictionary(String language) {
-		String dicPath = this.getDicPath(language);
-		System.out.println(dicPath);
+	public List<String> loadDictionary(Language language) {
+		String dicPath = this.getDicPath(language.getLanguageCode());
 		return this.getDictionaryContent(dicPath);
+	}
+	
+	public void removeStopwords(Project project) {
+		List<String> dictionary = this.loadDictionary(project.getLanguage());
+		String content;
+		for(ProgrammingFile pf : project) {
+			content = pf.getSourceCode();
+			for(String stpw : dictionary) {
+				content = content.replaceAll(stpw, " ");
+			}
+			
+			content = content.replaceAll("\\d", " ");
+			pf.setSourceCode(content);
+		}
 	}
 }

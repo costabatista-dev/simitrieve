@@ -17,8 +17,9 @@ public class Preprocessor {
 		throw new UnsupportedOperationException("Not implemented yet.");
 	}
 	
-	public Project removeStopwords(Project project) {
-		throw new UnsupportedOperationException("Not implemented yet.");
+	public void removeStopwords(Project project) {
+		StopwordsRemover stpwRemover = new StopwordsRemover();
+		stpwRemover.removeStopwords(project);
 	}
 	
 	
