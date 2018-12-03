@@ -3,6 +3,7 @@
  */
 package ml.paulobatista.simitrieve.preprocessing;
 
+import ml.paulobatista.simitrieve.entity.ProgrammingFile;
 import ml.paulobatista.simitrieve.entity.Project;
 
 /**
@@ -20,5 +21,13 @@ public class Preprocessor {
 		throw new UnsupportedOperationException("Not implemented yet.");
 	}
 	
+	
+	public void removeSpecialCharacters(Project project) {
+		String content;
+		for(ProgrammingFile pf : project) {
+			content = pf.getSourceCode().replaceAll("[\\W]", " ");
+			pf.setSourceCode(content);
+		}
+	}
 
 }
