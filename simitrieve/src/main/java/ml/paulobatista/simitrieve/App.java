@@ -5,6 +5,7 @@ package ml.paulobatista.simitrieve;
 
 import ml.paulobatista.simitrieve.entity.ProgrammingFile;
 import ml.paulobatista.simitrieve.entity.Project;
+import ml.paulobatista.simitrieve.preprocessing.CamelCaseSplitter;
 import ml.paulobatista.simitrieve.preprocessing.CommentRemover;
 import ml.paulobatista.simitrieve.preprocessing.Preprocessor;
 
@@ -26,6 +27,8 @@ public class App {
 		pcp.removeSpecialCharacters(project);
 		pcp.removeStopwords(project);
 		pcp.removeNonConceptWords(project);
+		CamelCaseSplitter ccs = new CamelCaseSplitter();
+		ccs.splitCamelCase(project);
 		
 		for(ProgrammingFile pf : project) {
 			System.out.println(pf.getSourceCode());
