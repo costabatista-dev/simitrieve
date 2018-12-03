@@ -3,6 +3,9 @@
  */
 package ml.paulobatista.simitrieve;
 
+import java.util.Iterator;
+import java.util.Map;
+
 import ml.paulobatista.simitrieve.entity.ProgrammingFile;
 import ml.paulobatista.simitrieve.entity.Project;
 import ml.paulobatista.simitrieve.preprocessing.CamelCaseSplitter;
@@ -29,9 +32,15 @@ public class App {
 		pcp.removeNonConceptWords(project);
 		CamelCaseSplitter ccs = new CamelCaseSplitter();
 		ccs.splitCamelCase(project);
+		pcp.tokenize(project);
+		
 		
 		for(ProgrammingFile pf : project) {
-			System.out.println(pf.getSourceCode());
+			System.out.println(" ------------------ ");
+			System.out.println(pf.getPath());
+			for(String s : pf.getQuantifiedTerms().keySet()) {
+				System.out.println(s + " = " + pf.getQuantifiedTerms().get(s));
+			}
 		}
 	}
 

@@ -3,6 +3,8 @@
  */
 package ml.paulobatista.simitrieve.preprocessing;
 
+import java.util.LinkedHashMap;
+
 import ml.paulobatista.simitrieve.entity.ProgrammingFile;
 import ml.paulobatista.simitrieve.entity.Project;
 
@@ -41,4 +43,38 @@ public class Preprocessor {
 
 	}
 
+	private String[] tokenizeSourceCode(ProgrammingFile programmingFile) {
+		String[] tokenized = programmingFile.getSourceCode().split("[\\s\\n]+");
+		return tokenized;
+	}
+
+	private LinkedHashMap<String, Integer> getQuantifiedTerms(String[] tokenizedSourceCode) {
+		LinkedHashMap<String, Integer> quantified = new LinkedHashMap<>();
+		Integer frequency;
+		for (String term : tokenizedSourceCode) {
+			if (quantified.containsKey(term)) {
+				frequency = quantified.get(term) + 1;
+				quantified.put(term, frequency);
+			} else {
+
+				frequency = 1;
+				quantified.put(term, frequency);
+
+			}
+		}
+
+		return quantified;
+	}
+
+	public void tokenize(Project project) {
+		LinkedHashMap<String, Integer> hash;
+		for (ProgrammingFile pf : project) {
+			String[] tokenized = this.tokenizeSourceCode(pf);
+			
+			hash = this.getQuantifiedTerms(tokenized);
+			String firstKey = (String) hash.keySet().toArray()[0];
+			hash.remove(firstKey);
+			pf.setQuantifiedTerms(hash);
+		}
+	}
 }
