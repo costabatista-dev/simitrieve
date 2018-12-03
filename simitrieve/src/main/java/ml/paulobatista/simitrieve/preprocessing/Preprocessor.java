@@ -30,5 +30,16 @@ public class Preprocessor {
 			pf.setSourceCode(content);
 		}
 	}
+	
+	public void removeNonConceptWords(Project project) {
+		String content;
+		
+		for(ProgrammingFile pf : project) {
+			content = pf.getSourceCode();
+			content = content.replaceAll("\\s\\w\\w?\\s", " ");
+			pf.setSourceCode(content);
+		}
+		
+	}
 
 }

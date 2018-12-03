@@ -79,7 +79,7 @@ public class StopwordsRemover {
 		return content;
 	}
 
-	public List<String> loadDictionary(Language language) {
+	private List<String> loadDictionary(Language language) {
 		String dicPath = this.getDicPath(language.getLanguageCode());
 		return this.getDictionaryContent(dicPath);
 	}
@@ -97,4 +97,6 @@ public class StopwordsRemover {
 			pf.setSourceCode(content);
 		}
 	}
+
+	
 }
