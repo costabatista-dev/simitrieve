@@ -3,7 +3,10 @@
  */
 package ml.paulobatista.simitrieve.preprocessing;
 
+import java.util.Comparator;
 import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import ml.paulobatista.simitrieve.entity.ProgrammingFile;
 import ml.paulobatista.simitrieve.entity.Project;
@@ -65,7 +68,14 @@ public class Preprocessor {
 
 		return quantified;
 	}
-
+	
+	private LinkedHashMap<String, Integer> sortQuantifiedTerms(LinkedHashMap<String, Integer> quantifiedTerms) {
+		LinkedHashMap<String, Integer> result = quantifiedTerms.entrySet().stream()
+                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
+                        (oldValue, newValue) -> oldValue, LinkedHashMap::new));
+		return result;
+	}
 	public void tokenize(Project project) {
 		LinkedHashMap<String, Integer> hash;
 		for (ProgrammingFile pf : project) {
@@ -74,6 +84,7 @@ public class Preprocessor {
 			hash = this.getQuantifiedTerms(tokenized);
 			String firstKey = (String) hash.keySet().toArray()[0];
 			hash.remove(firstKey);
+			hash = this.sortQuantifiedTerms(hash);
 			pf.setQuantifiedTerms(hash);
 		}
 	}
