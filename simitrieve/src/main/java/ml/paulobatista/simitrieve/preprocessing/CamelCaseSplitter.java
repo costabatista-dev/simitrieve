@@ -6,7 +6,7 @@ import ml.paulobatista.simitrieve.entity.Project;
 public class CamelCaseSplitter {
 	private String splitTerm(String term) {
 		String[] splittedTerms;
-		splittedTerms = term.split("(?<=[a-z])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])");
+		splittedTerms = term.split("(?<=[a-z])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])|_");
 		
 		StringBuilder builder = new StringBuilder();
 		
@@ -14,7 +14,7 @@ public class CamelCaseSplitter {
 			builder.append(t);
 			builder.append(" ");
 		}
-		
+
 		return builder.toString();
 	}
 	

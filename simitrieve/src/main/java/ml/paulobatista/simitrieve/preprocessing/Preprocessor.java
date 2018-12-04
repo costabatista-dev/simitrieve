@@ -3,13 +3,16 @@
  */
 package ml.paulobatista.simitrieve.preprocessing;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 import ml.paulobatista.simitrieve.entity.ProgrammingFile;
 import ml.paulobatista.simitrieve.entity.Project;
+import ml.paulobatista.simitrieve.entity.Quartile;
 
 /**
  * @author paulo
@@ -76,6 +79,7 @@ public class Preprocessor {
                         (oldValue, newValue) -> oldValue, LinkedHashMap::new));
 		return result;
 	}
+	
 	public void tokenize(Project project) {
 		LinkedHashMap<String, Integer> hash;
 		for (ProgrammingFile pf : project) {
@@ -88,4 +92,25 @@ public class Preprocessor {
 			pf.setQuantifiedTerms(hash);
 		}
 	}
+	
+	private void removeLessFrequencyTerms(ProgrammingFile programmingFile, float percent) {
+		LinkedHashMap<String, Integer> hash = programmingFile.getQuantifiedTerms();
+		int removeNumber =  Math.round(hash.size() * percent);
+		
+		List<String> keyList = new ArrayList<>();
+		hash.keySet().forEach(key -> keyList.add(key));
+		List<String> subkeyList = keyList.subList(keyList.size() - removeNumber, keyList.size());
+		subkeyList.forEach(key -> hash.remove(key));
+		
+		programmingFile.setQuantifiedTerms(hash);
+	}
+	
+	public void removeLessFrequencyTerms(Project project, float percent) {
+		project.forEach(pf -> this.removeLessFrequencyTerms(pf, percent));
+	}
+	
+	public void removeLessFrequencyTerms(Project project, Quartile quart) {
+		this.removeLessFrequencyTerms(project, quart.getPercent());
+	}
+	
 }

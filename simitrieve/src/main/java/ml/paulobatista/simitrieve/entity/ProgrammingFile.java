@@ -3,7 +3,6 @@
  */
 package ml.paulobatista.simitrieve.entity;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 /**
@@ -45,7 +44,7 @@ public class ProgrammingFile {
 		return this.sourceCode;
 	}
 	
-	public HashMap<String, Integer> getQuantifiedTerms() {
+	public LinkedHashMap<String, Integer> getQuantifiedTerms() {
 		return this.quantifiedTerms;
 	}
 }
