@@ -3,15 +3,7 @@
  */
 package ml.paulobatista.simitrieve;
 
-import java.util.Iterator;
-import java.util.Map;
-
-import ml.paulobatista.simitrieve.entity.ProgrammingFile;
-import ml.paulobatista.simitrieve.entity.Project;
-import ml.paulobatista.simitrieve.entity.Quartile;
-import ml.paulobatista.simitrieve.preprocessing.CamelCaseSplitter;
-import ml.paulobatista.simitrieve.preprocessing.CommentRemover;
-import ml.paulobatista.simitrieve.preprocessing.Preprocessor;
+import ml.paulobatista.simitrieve.args.ArgumentManager;
 
 /**
  * @author paulo
@@ -24,6 +16,12 @@ public class App {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		
+		ArgumentManager am = new ArgumentManager();
+		am.execute(args);
+		String path = am.getProjectPath();
+		System.out.println(path);
+		String name = am.getProjectName();
+		System.out.println(name);
+	}
 	
 }
