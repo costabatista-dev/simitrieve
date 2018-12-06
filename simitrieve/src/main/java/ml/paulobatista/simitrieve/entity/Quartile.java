@@ -10,8 +10,7 @@ package ml.paulobatista.simitrieve.entity;
 public enum Quartile {
 	FIRST((float) 0.25),
 	SECOND((float) 0.5),
-	THIRD((float) 0.75),
-	FOURTH((float) 1.0);
+	THIRD((float) 0.75);
 	
 	private final float percent;
 	
