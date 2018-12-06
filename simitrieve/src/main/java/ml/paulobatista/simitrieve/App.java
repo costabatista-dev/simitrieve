@@ -4,7 +4,7 @@
 package ml.paulobatista.simitrieve;
 
 import ml.paulobatista.simitrieve.args.ArgumentManager;
-import ml.paulobatista.simitrieve.entity.Language;
+import ml.paulobatista.simitrieve.entity.Project;
 
 /**
  * @author paulo
@@ -18,15 +18,13 @@ public class App {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		ArgumentManager am = new ArgumentManager();
-		am.applyProcessSettings(args);
-		String path = am.getProjectPath();
-		System.out.println(path);
-		String name = am.getProjectName();
-		System.out.println(name);
-		Language lng = am.getLanguage();
-		System.out.println(lng);
-		float percent = am.getRemoveLessFrequencyPercent();
-		System.out.println(percent);
+		Project project = am.execute(args);
+		
+		project.forEach(pf -> {
+			pf.getQuantifiedTerms().entrySet().forEach(item -> {
+				System.out.println(item.getKey() + ": " + item.getValue());
+			});
+		});
 	}
-	
+
 }

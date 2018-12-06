@@ -14,6 +14,8 @@ import ml.paulobatista.simitrieve.preprocessing.read.ProjectReader;
 public class Project extends ArrayList<ProgrammingFile> {
 	private static final long serialVersionUID = -1438536360244243911L;
 	private Language language;
+	private String version;
+	private String name;
 	
 	public Project() {
 
@@ -30,6 +32,22 @@ public class Project extends ArrayList<ProgrammingFile> {
 	
 	public Language getLanguage() {
 		return this.language;
+	}
+	
+	public void setVersion(String version) {
+		this.version = version;
+	}
+	
+	public String getVersion() {
+		return this.version;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public String getName() {
+		return this.name;
 	}
 	
 	private void setProjectLanguage(String[] ext) {

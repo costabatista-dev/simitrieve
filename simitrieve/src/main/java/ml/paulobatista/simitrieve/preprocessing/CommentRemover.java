@@ -3,6 +3,9 @@
  */
 package ml.paulobatista.simitrieve.preprocessing;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import ml.paulobatista.simitrieve.entity.Language;
 import ml.paulobatista.simitrieve.entity.ProgrammingFile;
 import ml.paulobatista.simitrieve.entity.Project;
@@ -13,37 +16,12 @@ import ml.paulobatista.simitrieve.entity.Project;
  */
 public class CommentRemover {
 	private String removeStandardJavaComment(String sourceCode) {
-		StringBuilder codeWithoutComments = new StringBuilder();
-		boolean continueCondition = true;
-		for (int i = 0; i < sourceCode.length(); i++) {
-			if (sourceCode.charAt(i) == '/' && sourceCode.charAt(i + 1) == '*') {
-				while (continueCondition) {
-					i++;
-					if (sourceCode.charAt(i) == '*' && sourceCode.charAt(i + 1) == '/') {
-						i += 2;
-						continueCondition = false;
-					}
-				}
-			}
+		Pattern regex = Pattern.compile("(\\/\\/.*$)|(\\/\\*.*\\*\\/)", Pattern.DOTALL);
+		Matcher regexMatcher = regex.matcher(sourceCode);
 
-			continueCondition = true;
+		sourceCode = regexMatcher.replaceAll(" ");
 
-			if (sourceCode.charAt(i) == '/' && sourceCode.charAt(i + 1) == '/') {
-				while (continueCondition) {
-					i++;
-					if (sourceCode.charAt(i) == '\n') {
-						i++;
-						continueCondition = false;
-					}
-				}
-			}
-
-			continueCondition = true;
-
-			codeWithoutComments.append(sourceCode.charAt(i));
-		}
-
-		return codeWithoutComments.toString();
+		return sourceCode;
 
 	}
 
@@ -56,118 +34,49 @@ public class CommentRemover {
 	}
 
 	public String removeJsComments(String sourceCode) {
-		return sourceCode;
-
+		return this.removeStandardJavaComment(sourceCode);
 	}
 
 	public String removePyComments(String sourceCode) {
-		StringBuilder withoutComments = new StringBuilder();
-		boolean continueCondition = true;
+		Pattern regex = Pattern.compile("(\"\"\".*\"\"\")|(\'\'\'.*\'\'\')|(#.*$)", Pattern.DOTALL);
+		Matcher regexMatcher = regex.matcher(sourceCode);
 
-		for (int i = 0; i < sourceCode.length(); i++) {
-			if (sourceCode.charAt(i) == '#') {
-				i++;
-				while (sourceCode.charAt(i) != '\n') {
-					i++;
-				}
-			}
+		sourceCode = regexMatcher.replaceAll(" ");
 
-			if (sourceCode.charAt(i) == '\'' && sourceCode.charAt(i + 1) == '\'' && sourceCode.charAt(i + 2) == '\'') {
-				i += 3;
-				while (continueCondition) {
-					if (sourceCode.charAt(i) == '\'' && sourceCode.charAt(i + 1) == '\''
-							&& sourceCode.charAt(i + 2) == '\'') {
-						i += 3;
-						continueCondition = false;
-					}
-					i++;
-				}
-			}
-
-			continueCondition = true;
-
-			if (sourceCode.charAt(i) == '\"' && sourceCode.charAt(i + 1) == '\"' && sourceCode.charAt(i + 2) == '\"') {
-				i += 3;
-				while (continueCondition) {
-					if (sourceCode.charAt(i) == '\"' && sourceCode.charAt(i + 1) == '\"'
-							&& sourceCode.charAt(i + 2) == '\"') {
-						i += 3;
-						continueCondition = false;
-					}
-					i++;
-				}
-			}
-
-			continueCondition = true;
-			withoutComments.append(sourceCode.charAt(i));
-		}
-
-		return withoutComments.toString();
-
+		return sourceCode;
 	}
-	
+
 	public String removeRbComments(String sourceCode) {
-		StringBuilder withoutComments = new StringBuilder();
-		boolean continueCondition = true;
-		
-		for(int i = 0; i < sourceCode.length(); i++) {
-			if(sourceCode.charAt(i) == '#') {
-				i++;
-				while(sourceCode.charAt(i) != '\n') {
-					i++;
-				}
-				i++;
-			}
-			
-			if(sourceCode.substring(i).startsWith("=begin")) {
-				i += 6;
-				while(continueCondition) {
-					if(sourceCode.substring(i).startsWith("=end")) {
-						continueCondition = false;
-						i += 4;
-					}
-					i++;
- 				}
-			}
-			
-			continueCondition = true;
-			withoutComments.append(sourceCode.charAt(i));
-		}
-		
-		return withoutComments.toString();
+		Pattern regex = Pattern.compile("(=begin.*=end)|(#.*$)", Pattern.DOTALL);
+		Matcher regexMatcher = regex.matcher(sourceCode);
+		sourceCode = regexMatcher.replaceAll(" ");
+		return sourceCode;
 	}
 
-	public ProgrammingFile removeCommentFromFile(ProgrammingFile pfile, Language lng) {
+	public void removeCommentFromFile(ProgrammingFile pfile, Language lng) {
 		String sourceCode = pfile.getSourceCode();
-		if(lng.equals(Language.CPP)) {
+		if (lng.equals(Language.CPP)) {
 			sourceCode = this.removeCppComment(sourceCode);
-		}
-		else if(lng.equals(Language.JAVA)) {
+		} else if (lng.equals(Language.JAVA)) {
 			sourceCode = this.removeJavaComment(sourceCode);
-		}
-		else if(lng.equals(Language.JAVASCRIPT)) {
+		} else if (lng.equals(Language.JAVASCRIPT)) {
 			sourceCode = this.removeJsComments(sourceCode);
-		}
-		else if(lng.equals(Language.PYTHON)) {
+		} else if (lng.equals(Language.PYTHON)) {
 			sourceCode = this.removePyComments(sourceCode);
-		}
-		else if(lng.equals(Language.RUBY)) {
+		} else if (lng.equals(Language.RUBY)) {
 			sourceCode = this.removeRbComments(sourceCode);
-		}
-		else {
+		} else {
 			throw new UnsupportedOperationException("Language not supported.");
 		}
-		
+
 		pfile.setSourceCode(sourceCode);
-		return pfile;
 	}
-	
-	public Project removeComments(Project project) {
+
+	public void removeComments(Project project) {
 		Language language = project.getLanguage();
-		for(ProgrammingFile pf : project) {
-			this.removeCommentFromFile(pf, language);
-		}
-		
-		return project;
+
+		project.forEach(programmingFile -> {
+			this.removeCommentFromFile(programmingFile, language);
+		});
 	}
 }

@@ -43,8 +43,8 @@ public class ProjectReader {
 	public List<String> getProgrammingFilePaths(String root, String[] ext) {
 		List<String> filePaths = this.getProjectStructure(root);
 		List<String> programmingFilePaths = new ArrayList<>();
-
-		for (String p : filePaths) {
+		
+		filePaths.forEach(p -> {
 			for (String e : ext) {
 				e = (e.charAt(0) == '.') ? e : ('.' + e);
 				if (p.endsWith(e)) {
@@ -52,7 +52,8 @@ public class ProjectReader {
 					programmingFilePaths.add(p);
 				}
 			}
-		}
+		});
+		
 
 		return programmingFilePaths;
 	}
@@ -83,10 +84,11 @@ public class ProjectReader {
 		List<String> paths = this.getProgrammingFilePaths(root, ext);
 		Project proj = new Project();
 		
-		for(String p : paths) {
+		paths.forEach(p -> {
 			ProgrammingFile pFile = this.getProgrammingFile(p);
 			proj.add(pFile);
-		}
+		});
+		
 		
 		return proj;
 	}
