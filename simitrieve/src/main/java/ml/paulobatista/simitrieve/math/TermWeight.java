@@ -51,7 +51,7 @@ public class TermWeight {
 
 	}
 
-	public LinkedHashMap<ProgrammingFile, LinkedHashMap<ProgrammingFile, Double>> calculateTermWeightSimilarity(
+	public LinkedHashMap<ProgrammingFile, LinkedHashMap<ProgrammingFile, Double>> calculateTermFrequencySimilarity(
 			Project project) {
 		LinkedHashMap<ProgrammingFile, LinkedHashMap<ProgrammingFile, Double>> similarities = new LinkedHashMap<>();
 		List<String> baseKeys = new ArrayList<>();

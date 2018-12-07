@@ -25,7 +25,7 @@ public class App {
 		Project project = am.execute(args);
 
 		LinkedHashMap<ProgrammingFile, LinkedHashMap<ProgrammingFile, Double>> map = new TermWeight()
-				.calculateTermWeightSimilarity(project);
+				.calculateTermFrequencySimilarity(project);
 
 		map.entrySet().forEach(item -> {
 			LinkedHashMap<ProgrammingFile, Double> submap = item.getValue();
