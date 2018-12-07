@@ -6,6 +6,7 @@ package ml.paulobatista.simitrieve.math;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map.Entry;
 
 import ml.paulobatista.simitrieve.entity.ProgrammingFile;
 import ml.paulobatista.simitrieve.entity.Project;
@@ -65,7 +66,7 @@ public class TermWeight {
 					baseKeys.addAll(this.getBaseKeys(pf1, pf2));
 					double[] fArray = this.prepareArrayToTermWeighting(pf1, baseKeys);
 					double[] sArray = this.prepareArrayToTermWeighting(pf2, baseKeys);
-					double similarity = Similarity.cosineSimilarity(fArray, sArray);
+					double similarity = Maths.cosineSimilarity(fArray, sArray);
 					hash2.put(pf2, similarity);
 
 				}
@@ -75,5 +76,22 @@ public class TermWeight {
 
 		return similarities;
 	}
+	
+	private double getTermFrequency(ProgrammingFile programmingFile, String term) {
+		LinkedHashMap<String, Integer> hash = programmingFile.getQuantifiedTerms();
+		double total = 0.0;
+		
+		for(Entry<String, Integer> element : hash.entrySet()) {
+			total += element.getValue();
+		}
+		
+		double times = hash.get(term);
+		
+		return (times/total);
+
+		
+	}
+	
+	
 
 }

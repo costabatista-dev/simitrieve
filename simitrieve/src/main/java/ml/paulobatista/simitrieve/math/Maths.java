@@ -7,7 +7,7 @@ package ml.paulobatista.simitrieve.math;
  * @author costa
  *
  */
-public class Similarity {
+public class Maths {
 
 	public static double truncate(double value) {
 		double truncated = Math.round(value * 10000) / 10000d;
