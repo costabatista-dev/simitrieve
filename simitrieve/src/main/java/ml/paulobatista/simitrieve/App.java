@@ -3,8 +3,12 @@
  */
 package ml.paulobatista.simitrieve;
 
+import java.util.LinkedHashMap;
+
 import ml.paulobatista.simitrieve.args.ArgumentManager;
+import ml.paulobatista.simitrieve.entity.ProgrammingFile;
 import ml.paulobatista.simitrieve.entity.Project;
+import ml.paulobatista.simitrieve.math.TermWeight;
 
 /**
  * @author paulo
@@ -19,10 +23,15 @@ public class App {
 		// TODO Auto-generated method stub
 		ArgumentManager am = new ArgumentManager();
 		Project project = am.execute(args);
-		
-		project.forEach(pf -> {
-			pf.getQuantifiedTerms().entrySet().forEach(item -> {
-				System.out.println(item.getKey() + ": " + item.getValue());
+
+		LinkedHashMap<ProgrammingFile, LinkedHashMap<ProgrammingFile, Double>> map = new TermWeight()
+				.calculateTermFrequencySimilarity(project);
+
+		map.entrySet().forEach(item -> {
+			LinkedHashMap<ProgrammingFile, Double> submap = item.getValue();
+			submap.entrySet().forEach(item2 -> {
+				System.out.println(
+						item.getKey().getName() + " x " + item2.getKey().getName() + ": " + item2.getValue());
 			});
 		});
 	}

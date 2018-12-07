@@ -3,6 +3,7 @@
  */
 package ml.paulobatista.simitrieve.entity;
 
+import java.io.File;
 import java.util.LinkedHashMap;
 
 /**
@@ -11,6 +12,7 @@ import java.util.LinkedHashMap;
  */
 public class ProgrammingFile {
 	private String path;
+	private String name;
 	private String sourceCode;
 	private LinkedHashMap<String, Integer> quantifiedTerms;
 	
@@ -22,10 +24,17 @@ public class ProgrammingFile {
 		this.path = path;
 		this.sourceCode = sourceCode;
 		this.quantifiedTerms = new LinkedHashMap<>();
+		
+		String name = path.substring(path.lastIndexOf(File.separator) + 1);
+		this.name = name;
 	}
 	
 	public void setPath(String path) {
 		this.path = path;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 	public void setSourceCode(String sourceCode) {
@@ -38,6 +47,10 @@ public class ProgrammingFile {
 	
 	public String getPath() {
 		return this.path;
+	}
+	
+	public String getName() {
+		return this.name;
 	}
 	
 	public String getSourceCode() {
