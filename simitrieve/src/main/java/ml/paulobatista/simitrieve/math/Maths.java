@@ -14,6 +14,7 @@ public class Maths {
 
 		return truncated;
 	}
+	
 
 	public static double cosineSimilarity(double[] leftArray, double[] rightArray) {
 		double product = 0.0;
