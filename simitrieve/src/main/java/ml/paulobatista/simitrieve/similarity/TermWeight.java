@@ -1,7 +1,7 @@
 /**
  * 
  */
-package ml.paulobatista.simitrieve.math;
+package ml.paulobatista.simitrieve.similarity;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

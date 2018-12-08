@@ -13,6 +13,7 @@ public class ArgumentManager {
 	private String projectName;
 	private String version;
 	private String outputFileName;
+	private String termWeighting;
 	private Language language;
 	private boolean comments;
 	private boolean camelcase;
@@ -44,6 +45,14 @@ public class ArgumentManager {
 		this.outputFileName = outputFileName;
 	}
 
+	public String getTermWeighting() {
+		return this.termWeighting;
+	}
+	
+	public void setTermWeighting(String termWeighting) {
+		this.termWeighting = termWeighting;
+	}
+	
 	public String getVersion() {
 		return this.version;
 	}
@@ -142,7 +151,13 @@ public class ArgumentManager {
 	}
 
 	private String getVersion(String[] args) {
-		return this.getStringArgumentProperty(args, "--version", "-V");
+		String version = this.getStringArgumentProperty(args, "--version", "-V");
+		return (version == null) ? "version_not_defined" : version;
+	}
+	
+	private String getTermWeighting(String[] args) {
+		String tw = this.getStringArgumentProperty(args, "--termweighting", "-T");
+		return (tw == null) ? "tfidf" : tw;
 	}
 
 	private Language getProjectLanguage(String[] args) {
@@ -275,7 +290,8 @@ public class ArgumentManager {
 		project.setLanguage(this.language);
 		project.setName(this.getProjectName());
 		this.executePreprocessing(project);
-
+		this.setTermWeighting(this.getTermWeighting(args));
+		
 		return project;
 	}
 }

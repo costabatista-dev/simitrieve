@@ -1,7 +1,7 @@
 /**
  * 
  */
-package ml.paulobatista.simitrieve.math;
+package ml.paulobatista.simitrieve.similarity;
 
 /**
  * @author costa
