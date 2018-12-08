@@ -29,7 +29,7 @@ public class App {
 		Project project = am.execute(args);
 
 		LinkedHashMap<ProgrammingFile, LinkedHashMap<ProgrammingFile, Double>> similarityHash = new TermWeight()
-				.calculateTFIDFSimilarity(project);
+				.calculateLSISimilarity(project);
 
 		CSVData csvData = new CSVData(new String[] {"First Path", "Second Path", "First File", "Second File", "Similarity"});
 		List<String[]> content = new ArrayList<>();
