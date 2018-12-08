@@ -1,7 +1,7 @@
 package ml.paulobatista.simitrieve.preprocessing;
 
-import ml.paulobatista.simitrieve.entity.ProgrammingFile;
-import ml.paulobatista.simitrieve.entity.Project;
+import ml.paulobatista.simitrieve.entity.project.ProgrammingFile;
+import ml.paulobatista.simitrieve.entity.project.Project;
 
 public class CamelCaseSplitter {
 	private String splitTerm(String term) {

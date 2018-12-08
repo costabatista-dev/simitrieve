@@ -1,7 +1,7 @@
 /**
  * 
  */
-package ml.paulobatista.simitrieve.entity;
+package ml.paulobatista.simitrieve.entity.project;
 
 import java.io.File;
 import java.util.LinkedHashMap;

@@ -8,8 +8,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
-import ml.paulobatista.simitrieve.entity.ProgrammingFile;
-import ml.paulobatista.simitrieve.entity.Project;
+import ml.paulobatista.simitrieve.entity.project.ProgrammingFile;
+import ml.paulobatista.simitrieve.entity.project.Project;
 
 /**
  * @author costa

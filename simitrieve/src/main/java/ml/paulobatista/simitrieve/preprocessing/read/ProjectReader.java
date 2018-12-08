@@ -13,8 +13,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import ml.paulobatista.simitrieve.entity.ProgrammingFile;
-import ml.paulobatista.simitrieve.entity.Project;
+import ml.paulobatista.simitrieve.entity.project.ProgrammingFile;
+import ml.paulobatista.simitrieve.entity.project.Project;
 
 /**
  * @author paulo

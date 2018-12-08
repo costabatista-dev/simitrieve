@@ -10,9 +10,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import ml.paulobatista.simitrieve.entity.ProgrammingFile;
-import ml.paulobatista.simitrieve.entity.Project;
-import ml.paulobatista.simitrieve.entity.Quartile;
+import ml.paulobatista.simitrieve.entity.project.ProgrammingFile;
+import ml.paulobatista.simitrieve.entity.project.Project;
+import ml.paulobatista.simitrieve.entity.project.Quartile;
 
 /**
  * @author paulo

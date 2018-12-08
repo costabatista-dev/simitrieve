@@ -8,9 +8,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
 
-import ml.paulobatista.simitrieve.entity.Language;
-import ml.paulobatista.simitrieve.entity.ProgrammingFile;
-import ml.paulobatista.simitrieve.entity.Project;
+import ml.paulobatista.simitrieve.entity.project.Language;
+import ml.paulobatista.simitrieve.entity.project.ProgrammingFile;
+import ml.paulobatista.simitrieve.entity.project.Project;
 
 /**
  * @author paulo

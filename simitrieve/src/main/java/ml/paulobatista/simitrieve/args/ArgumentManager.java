@@ -2,9 +2,9 @@ package ml.paulobatista.simitrieve.args;
 
 import java.io.File;
 
-import ml.paulobatista.simitrieve.entity.Language;
-import ml.paulobatista.simitrieve.entity.Project;
-import ml.paulobatista.simitrieve.entity.Quartile;
+import ml.paulobatista.simitrieve.entity.project.Language;
+import ml.paulobatista.simitrieve.entity.project.Project;
+import ml.paulobatista.simitrieve.entity.project.Quartile;
 import ml.paulobatista.simitrieve.preprocessing.Preprocessor;
 import ml.paulobatista.simitrieve.preprocessing.read.ProjectReader;
 
@@ -12,6 +12,7 @@ public class ArgumentManager {
 	private String projectPath;
 	private String projectName;
 	private String version;
+	private String outputFileName;
 	private Language language;
 	private boolean comments;
 	private boolean camelcase;
@@ -33,6 +34,14 @@ public class ArgumentManager {
 
 	public void setProjectName(String projectName) {
 		this.projectName = projectName;
+	}
+	
+	public String getOutputFileName() {
+		return this.outputFileName;
+	}
+	
+	public void setOutputFileName(String outputFileName) {
+		this.outputFileName = outputFileName;
 	}
 
 	public String getVersion() {
@@ -116,7 +125,10 @@ public class ArgumentManager {
 		return null;
 	}
 
-
+	private String getOutputFileName(String[] args) {
+		return this.getStringArgumentProperty(args, "-O", "--outputfilename");
+	}
+	
 	private String getProjectPath(String[] args) {
 		return this.getStringArgumentProperty(args, "--path", "-P");
 	}
@@ -233,6 +245,7 @@ public class ArgumentManager {
 		this.setLanguage(this.getProjectLanguage(args));
 		this.setExtenstionsFile(this.getExtensionsFileFromLanguage());
 		this.setVersion(this.getVersion(args));
+		this.setOutputFileName(this.getOutputFileName(args));
 	}
 
 	public void applyProcessSettings(String[] args) {
