@@ -6,174 +6,78 @@ package ml.paulobatista.simitrieve.csv;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
-import com.opencsv.CSVWriter;
-
-import ml.paulobatista.simitrieve.entity.CosineSimilarity;
-import ml.paulobatista.simitrieve.entity.Project;
-import ml.paulobatista.simitrieve.entity.process.CamelCase;
-import ml.paulobatista.simitrieve.entity.process.Comment;
-import ml.paulobatista.simitrieve.entity.process.Normalization;
-import ml.paulobatista.simitrieve.entity.process.Quantile;
-import ml.paulobatista.simitrieve.entity.process.Stem;
-import ml.paulobatista.simitrieve.error.ErrorHandler;
-import ml.paulobatista.simitrieve.process.Process;
-import ml.paulobatista.simitrieve.scan.feature.FeatureScanner;
+import ml.paulobatista.simitrieve.entity.csv.CSVData;
 
 /**
  * @author costa
  *
  */
 public class CSVManager {
+	private CSVData csvData;
 
-	public void writeProjectFeaturesCSV(Project project) {
-		FeatureScanner fScanner = new FeatureScanner();
-
-		int numberOfClasses = fScanner.getNumberOfClasses(project);
-		int numberOfPackages = fScanner.getNumberOfPackages(project);
-		int numberOfLinesOfCode = fScanner.getNumberOfLinesOfCode(project);
-		String programmingLanguageName = fScanner.getProgrammingLanguageName(project);
-		String version = fScanner.getProjectVersion(project);
-		String projectName = fScanner.getProjectName(project);
-
-		String[] header = new String[] { "Feature", "Value" };
-
-		List<String[]> info = new ArrayList<>();
-
-		info.add(new String[] { "Name", projectName });
-		info.add(new String[] { "Version", version });
-		info.add(new String[] { "Language", programmingLanguageName });
-		info.add(new String[] { "NOP", Integer.toString(numberOfPackages) });
-		info.add(new String[] { "NOC", Integer.toString(numberOfClasses) });
-		info.add(new String[] { "LOC", Integer.toString(numberOfLinesOfCode) });
-
-		String outputDirectoryName = fScanner.getProjectName(project) + "_stats" + File.separator +  "V" + version + File.separator + "features";
-
-		createOutputDiretctory(outputDirectoryName);
-
-		String outputName = fScanner.getProjectName(project) + "_features.csv";
-
-		writeCSV(outputDirectoryName, outputName, header, info);
+	public CSVManager(CSVData csvData) {
+		this.csvData = csvData;
 	}
 
-	public void writeProjectSimilarityCSV(List<CosineSimilarity> similarities, Project project, Process process) {
-		
-		String outputDirectoryName = project.getName() + "_stats" + File.separator + "V" + project.getVersion() + File.separator + "similarities";
-		
-		String outputName = project.getName() + "_" + "V" + project.getVersion() + "_" + getCommentTag(process.getComment()) +
-				getCamelCaseTag(process.getCamelCase()) + getStemTag(process.getStem()) + getQuantileTag(process.getQuantile()) +
-				getNormalizationTag(process.getNormalization()) + ".csv";
-		
-		String[] header = new String[] {"First Package","Second Package", "First Class", "Second Class", "Similarity"};
-		List<String[]> info = new ArrayList<>();
-		
-		for(CosineSimilarity similarity : similarities) {
-			String[] currentInfo = new String[] {similarity.getFirstPackage(), similarity.getSecondPackage(),
-					similarity.getFirstClass(), similarity.getSecondClass(), Double.toString(similarity.getSimilarity())};
-			
-			info.add(currentInfo);
-		}
-		
-		createOutputDiretctory(outputDirectoryName);
-		
-		writeCSV(outputDirectoryName, outputName, header, info);
+	public void setCSVData(CSVData csvData) {
+		this.csvData = csvData;
 	}
 
-	private String getCommentTag(Comment comment) {
-
-		if (comment.equals(Comment.YES)) {
-			return "Yco";
-		}
-		return "Nco";
+	public CSVData getCSVData() {
+		return this.csvData;
 	}
 
-	private String getStemTag(Stem stem) {
-		if (stem.equals(Stem.YES)) {
-			return "Ys";
+	private String getDataToWrite(char separator) {
+		String[] header = this.csvData.getHeader();
+		List<String[]> content = this.csvData.getContent();
+		String[][] dataToWrite = new String[content.size() + 1][header.length];
+
+		for (int j = 0; j < header.length; j++) {
+			dataToWrite[0][j] = header[j];
 		}
 
-		return "Ns";
+		for (int i = 0; i < content.size(); i++) {
+			String[] line = content.get(i);
+			for (int j = 0; j < line.length; j++) {
+				dataToWrite[i + 1][j] = line[j];
+			}
+		}
+
+		StringBuilder builder = new StringBuilder();
+		int lastIndexOfSeparator;
+		for (String[] line : dataToWrite) {
+			for (String s : line) {
+				builder.append(s);
+				builder.append(separator);
+			}
+			lastIndexOfSeparator = builder.lastIndexOf(String.valueOf(separator));
+			builder.setCharAt(lastIndexOfSeparator, '\n');
+		}
+
+		return builder.toString();
 	}
 
-	private String getCamelCaseTag(CamelCase camelCase) {
-		if(camelCase.equals(CamelCase.YES)) {
-			return "Yca";
-		}
+	public void writeCSV(char separator) {
+		String filename = (this.csvData.getDataName() == null) ? "outfile.csv" : this.csvData.getDataName();
+		filename = (filename.endsWith(".csv")) ? filename : filename + ".csv";
+		File file = new File(filename);
+		String dataToWrite = this.getDataToWrite(separator);
+		FileWriter writer = null;
 		
-		return "Nca";
-	}
-	
-	private String getQuantileTag(Quantile quantile) {
-		if(quantile.equals(Quantile.FIRST)) {
-			return "Qfi";
-		}
-		
-		else if(quantile.equals(Quantile.SECOND)) {
-			return "Qse";
-		}
-		
-		else if(quantile.equals(Quantile.THIRD)) {
-			return "Qth";
-		}
-		
-		else if(quantile.equals(Quantile.FOURTH)) {
-			return "Qfo";
-		}
-		
-		else {
-			//error threat.
-			return null;
-		}
-	}
-	
-	private String getNormalizationTag(Normalization normalization) {
-		if(normalization.equals(Normalization.NAIVE)) {
-			return "Naive";
-		}
-		else if(normalization.equals(Normalization.TFIDF)) {
-			return "Tfidf";
-		}
-		else if(normalization.equals(Normalization.LSI)) {
-			return "Lsi";
-		}
-		else {
-			//error threat.
-			return null;
-		}
-	}
-
-	private void writeCSV(String outputDirectory, String outputFile, String[] header, List<String[]> info) {
-		String csv = outputDirectory + File.separator + outputFile;
-
 		try {
-			CSVWriter csvWriter = new CSVWriter(new FileWriter(csv));
-			csvWriter.writeNext(header);
-			csvWriter.writeAll(info);
-			csvWriter.close();
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			writer = new FileWriter(file);
+			writer.write(dataToWrite);
+			writer.flush();
+			writer.close();
+		} catch (IOException ioe) {
+			System.out.println(ioe.getMessage());
 		}
 	}
 
-	private boolean createOutputDiretctory(String directory) {
-		File file = new File(directory);
-		boolean status;
-		if (!file.exists()) {
-			file.mkdirs();
-		}
-
-		if (file.exists()) {
-			status = true;
-		} else {
-			System.out.println("In CSVManager:");
-			ErrorHandler.directoryCannotBeCreated(directory);
-			status = false;
-		}
-
-		return status;
+	public void writeCSV() {
+		this.writeCSV(',');
 	}
+
 }
